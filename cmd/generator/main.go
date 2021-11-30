@@ -26,6 +26,9 @@ import (
 	tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
 
 	"github.com/crossplane-contrib/terrajet/pkg/pipeline"
+	// Comment out the line below instead of the above, if your Terraform
+	// provider uses an old version (<v2) of github.com/hashicorp/terraform-plugin-sdk.
+	// "github.com/crossplane-contrib/terrajet/pkg/types/conversion"
 
 	"github.com/crossplane-contrib/provider-jet-template/config"
 )
@@ -38,5 +41,9 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("cannot calculate the absolute path of %s", os.Args[1]))
 	}
-	pipeline.Run(config.GetProvider(tf.Provider()), absRootDir)
+	resourceMap := tf.Provider().ResourcesMap
+	// Comment out the line below instead of the above, if your Terraform
+	// provider uses an old version (<v2) of github.com/hashicorp/terraform-plugin-sdk.
+	// resourceMap := conversion.GetV2ResourceMap(tf.Provider())
+	pipeline.Run(config.GetProvider(resourceMap), absRootDir)
 }
