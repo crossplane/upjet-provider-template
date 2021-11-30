@@ -27,11 +27,7 @@ const (
 )
 
 // GetProvider returns provider configuration
-func GetProvider(tf *schema.Provider) *tjconfig.Provider {
-	// Comment out the line below instead of the above, if your Terraform
-	// provider uses an old version (<v2) of github.com/hashicorp/terraform-plugin-sdk.
-	// resourceMap := conversion.GetV2ResourceMap(tf.Provider())
-
+func GetProvider(resourceMap map[string]*schema.Resource) *tjconfig.Provider {
 	defaultResourceFn := func(name string, terraformResource *schema.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
 		r := tjconfig.DefaultResource(name, terraformResource)
 		// Add any provider-specific defaulting here. For example:
@@ -39,7 +35,7 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 		return r
 	}
 
-	pc := tjconfig.NewProvider(tf.ResourcesMap, resourcePrefix, modulePath,
+	pc := tjconfig.NewProvider(resourceMap, resourcePrefix, modulePath,
 		tjconfig.WithDefaultResourceFn(defaultResourceFn))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
