@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # Please set ProviderNameLower & ProviderNameUpper environment variables before running this script.
-# See: https://github.com/crossplane-contrib/terrajet/blob/main/docs/generating-a-provider.md
+# See: https://github.com/crossplane/terrajet/blob/main/docs/generating-a-provider.md
 set -euo pipefail
 
 REPLACE_FILES='./* ./.github :!build/** :!go.sum :!hack/prepare.sh'
