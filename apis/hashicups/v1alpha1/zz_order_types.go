@@ -56,6 +56,7 @@ type ItemsParameters struct {
 }
 
 type OrderObservation struct {
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type OrderParameters struct {

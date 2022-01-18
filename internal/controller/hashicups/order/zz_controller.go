@@ -30,9 +30,9 @@ import (
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
 
-	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
-	tjcontroller "github.com/crossplane-contrib/terrajet/pkg/controller"
-	"github.com/crossplane-contrib/terrajet/pkg/terraform"
+	tjconfig "github.com/crossplane/terrajet/pkg/config"
+	tjcontroller "github.com/crossplane/terrajet/pkg/controller"
+	"github.com/crossplane/terrajet/pkg/terraform"
 
 	v1alpha1 "github.com/crossplane-contrib/provider-jet-template/apis/hashicups/v1alpha1"
 )

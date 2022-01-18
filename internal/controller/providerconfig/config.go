@@ -17,8 +17,8 @@ limitations under the License.
 package providerconfig
 
 import (
-	"github.com/crossplane-contrib/terrajet/pkg/config"
-	"github.com/crossplane-contrib/terrajet/pkg/terraform"
+	"github.com/crossplane/terrajet/pkg/config"
+	"github.com/crossplane/terrajet/pkg/terraform"
 	"k8s.io/client-go/util/workqueue"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/controller"

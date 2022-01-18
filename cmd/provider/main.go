@@ -20,9 +20,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
+	"github.com/crossplane/terrajet/pkg/terraform"
 	tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
 	"gopkg.in/alecthomas/kingpin.v2"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -71,6 +71,10 @@ func main() {
 
 	rl := ratelimiter.NewGlobal(ratelimiter.DefaultGlobalRPS)
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Template APIs to scheme")
-	kingpin.FatalIfError(controller.Setup(mgr, log, rl, setup, ws, pconfig.GetProvider(tf.Provider().ResourcesMap), 1), "Cannot setup Template controllers")
+	resourceMap := tf.Provider().ResourcesMap
+	// Comment out the line below instead of the above, if your Terraform
+	// provider uses an old version (<v2) of github.com/hashicorp/terraform-plugin-sdk.
+	// resourceMap := conversion.GetV2ResourceMap(tf.Provider())
+	kingpin.FatalIfError(controller.Setup(mgr, log, rl, setup, ws, pconfig.GetProvider(resourceMap), 1), "Cannot setup Template controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
