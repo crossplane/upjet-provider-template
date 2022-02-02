@@ -1,4 +1,4 @@
-// +build generate
+//go:build generate
 
 /*
 Copyright 2021 The Crossplane Authors.
@@ -22,6 +22,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/crossplane/terrajet/pkg/pipeline"
 
 	"github.com/crossplane-contrib/provider-jet-template/config"
 )
