@@ -2,6 +2,7 @@ module github.com/crossplane-contrib/provider-jet-template
 
 go 1.16
 
+replace github.com/crossplane/terrajet => github.com/turkenh/terrajet v0.0.0-20220124141610-617a1c30a0dc
 require (
 	github.com/crossplane/crossplane-runtime v0.15.1-0.20211004150827-579c1833b513
 	github.com/crossplane/crossplane-tools v0.0.0-20210916125540-071de511ae8e

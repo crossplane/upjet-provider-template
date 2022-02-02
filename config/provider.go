@@ -17,7 +17,12 @@ limitations under the License.
 package config
 
 import (
+	_ "embed"
+	"fmt"
+
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
+	"github.com/crossplane/terrajet/pkg/types/conversion/cli"
+	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -26,8 +31,11 @@ const (
 	modulePath     = "github.com/crossplane-contrib/provider-jet-template"
 )
 
+//go:embed schema.json
+var providerSchema string
+
 // GetProvider returns provider configuration
-func GetProvider(resourceMap map[string]*schema.Resource) *tjconfig.Provider {
+func GetProvider(source string) *tjconfig.Provider {
 	defaultResourceFn := func(name string, terraformResource *schema.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
 		r := tjconfig.DefaultResource(name, terraformResource)
 		// Add any provider-specific defaulting here. For example:
@@ -35,6 +43,11 @@ func GetProvider(resourceMap map[string]*schema.Resource) *tjconfig.Provider {
 		return r
 	}
 
+	cliSchemas := tfjson.ProviderSchemas{}
+	if err := cliSchemas.UnmarshalJSON([]byte(providerSchema)); err != nil {
+		panic(err)
+	}
+	resourceMap := cli.GetV2ResourceMapFromTFJSONSchemaMap(cliSchemas.Schemas[fmt.Sprintf("registry.terraform.io/%s", source)].ResourceSchemas)
 	pc := tjconfig.NewProvider(resourceMap, resourcePrefix, modulePath,
 		tjconfig.WithDefaultResourceFn(defaultResourceFn))
 
