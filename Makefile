@@ -78,6 +78,7 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 
 generate.init: $(TERRAFORM_PROVIDER_SCHEMA)
 
+.PHONY: $(TERRAFORM_PROVIDER_SCHEMA)
 # ====================================================================================
 # Targets
 
