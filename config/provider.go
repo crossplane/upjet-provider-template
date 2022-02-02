@@ -17,6 +17,7 @@ limitations under the License.
 package config
 
 import (
+	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 	"fmt"
 
