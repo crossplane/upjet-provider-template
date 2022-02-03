@@ -18,11 +18,15 @@
 # See: https://github.com/crossplane/terrajet/blob/main/docs/generating-a-provider.md
 set -euo pipefail
 
-REPLACE_FILES='./* ./.github :!build/** :!go.sum :!hack/prepare.sh'
+REPLACE_FILES='./* ./.github :!build/** :!go.* :!hack/prepare.sh'
 # shellcheck disable=SC2086
 git grep -l 'template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/template/${ProviderNameLower}/g"
 # shellcheck disable=SC2086
 git grep -l 'Template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/Template/${ProviderNameUpper}/g"
+# be careful while replacing "template" keyword in go.mod as it could tamper
+# some imported packages under require section.
+sed -i.bak "s/provider-jet-template/provider-jet-${ProviderNameLower}/g" go.mod
+
 # Clean up the .bak files created by sed
 git clean -fd
 
