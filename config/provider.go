@@ -22,7 +22,7 @@ import (
 	"fmt"
 
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
-	"github.com/crossplane/terrajet/pkg/types/conversion/cli"
+	tjconversion "github.com/crossplane/terrajet/pkg/types/conversion/tfjson"
 	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -48,7 +48,7 @@ func GetProvider(source string) *tjconfig.Provider {
 	if err := cliSchemas.UnmarshalJSON([]byte(providerSchema)); err != nil {
 		panic(err)
 	}
-	resourceMap := cli.GetV2ResourceMapFromTFJSONSchemaMap(cliSchemas.Schemas[fmt.Sprintf("registry.terraform.io/%s", source)].ResourceSchemas)
+	resourceMap := tjconversion.GetV2ResourceMap(cliSchemas.Schemas[fmt.Sprintf("registry.terraform.io/%s", source)].ResourceSchemas)
 	pc := tjconfig.NewProvider(resourceMap, resourcePrefix, modulePath,
 		tjconfig.WithDefaultResourceFn(defaultResourceFn))
 

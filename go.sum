@@ -616,8 +616,8 @@ github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20170815181823-89b8d40f7ca8/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
-github.com/turkenh/terrajet v0.0.0-20220124141610-617a1c30a0dc h1:WAP4VIHG72jXH6lWFIf5ulCa7cBj2Huu6aNy03U4iQI=
-github.com/turkenh/terrajet v0.0.0-20220124141610-617a1c30a0dc/go.mod h1:YjlNluSOiBVzVBCbyPQyyTubTFdQSYNpmDGxnMCI0js=
+github.com/turkenh/terrajet v0.0.0-20220203085517-4290d82b97c7 h1:uNPAsvc5kVnzgjw8D7WfMDUm/UrMensoiadr+2YbBNk=
+github.com/turkenh/terrajet v0.0.0-20220203085517-4290d82b97c7/go.mod h1:YjlNluSOiBVzVBCbyPQyyTubTFdQSYNpmDGxnMCI0js=
 github.com/ulikunitz/xz v0.5.5/go.mod h1:2bypXElzHzzJZwzH67Y6wb67pO62Rzfn7BSiF4ABRW8=
 github.com/ulikunitz/xz v0.5.8/go.mod h1:nbz6k7qbPmH4IRqmfOplQw/tblSgqTqBwxkY0oWt/14=
 github.com/urfave/cli v1.20.0/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
