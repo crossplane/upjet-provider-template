@@ -23,7 +23,7 @@ REPLACE_FILES='./* ./.github :!build/** :!go.* :!hack/prepare.sh'
 git grep -l 'template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/template/${ProviderNameLower}/g"
 # shellcheck disable=SC2086
 git grep -l 'Template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/Template/${ProviderNameUpper}/g"
-# be careful while replacing "template" keyword in go.mod as it could tamper
+# We need to be careful while replacing "template" keyword in go.mod as it could tamper
 # some imported packages under require section.
 sed -i.bak "s/provider-jet-template/provider-jet-${ProviderNameLower}/g" go.mod
 
@@ -33,3 +33,8 @@ git clean -fd
 git mv "internal/clients/template.go" "internal/clients/${ProviderNameLower}.go"
 git mv "cluster/images/provider-jet-template" "cluster/images/provider-jet-${ProviderNameLower}"
 git mv "cluster/images/provider-jet-template-controller" "cluster/images/provider-jet-${ProviderNameLower}-controller"
+
+# We need to remove this api folder otherwise first `make generate` fails with
+# the following error probably due to some optimizations in go generate with v1.17:
+# generate: open /Users/hasanturken/Workspace/crossplane-contrib/provider-jet-template/apis/null/v1alpha1/zz_generated.deepcopy.go: no such file or directory
+rm -rf apis/null
