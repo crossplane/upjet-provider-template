@@ -19,11 +19,8 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
-	"fmt"
 
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
-	tjconversion "github.com/crossplane/terrajet/pkg/types/conversion/tfjson"
-	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -36,7 +33,7 @@ const (
 var providerSchema string
 
 // GetProvider returns provider configuration
-func GetProvider(source string) *tjconfig.Provider {
+func GetProvider() *tjconfig.Provider {
 	defaultResourceFn := func(name string, terraformResource *schema.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
 		r := tjconfig.DefaultResource(name, terraformResource)
 		// Add any provider-specific defaulting here. For example:
@@ -44,12 +41,7 @@ func GetProvider(source string) *tjconfig.Provider {
 		return r
 	}
 
-	cliSchemas := tfjson.ProviderSchemas{}
-	if err := cliSchemas.UnmarshalJSON([]byte(providerSchema)); err != nil {
-		panic(err)
-	}
-	resourceMap := tjconversion.GetV2ResourceMap(cliSchemas.Schemas[fmt.Sprintf("registry.terraform.io/%s", source)].ResourceSchemas)
-	pc := tjconfig.NewProvider(resourceMap, resourcePrefix, modulePath,
+	pc := tjconfig.NewProviderWithSchema([]byte(providerSchema), resourcePrefix, modulePath,
 		tjconfig.WithDefaultResourceFn(defaultResourceFn))
 
 	for _, configure := range []func(provider *tjconfig.Provider){

@@ -5,6 +5,7 @@ PROJECT_NAME := provider-jet-template
 PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.1.4
+
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/null
 export TERRAFORM_PROVIDER_VERSION := 3.1.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-null

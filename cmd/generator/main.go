@@ -29,13 +29,12 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 3 || os.Args[2] == "" {
-		panic("root directory and provider source are required to be given arguments")
+	if len(os.Args) < 2 || os.Args[1] == "" {
+		panic("root directory is required to be given as argument")
 	}
 	absRootDir, err := filepath.Abs(os.Args[1])
 	if err != nil {
 		panic(fmt.Sprintf("cannot calculate the absolute path of %s", os.Args[1]))
 	}
-	providerSource := os.Args[2]
-	pipeline.Run(config.GetProvider(providerSource), absRootDir)
+	pipeline.Run(config.GetProvider(), absRootDir)
 }
