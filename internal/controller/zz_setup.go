@@ -25,7 +25,7 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 	"github.com/crossplane/terrajet/pkg/terraform"
 
-	order "github.com/crossplane-contrib/provider-jet-template/internal/controller/hashicups/order"
+	resource "github.com/crossplane-contrib/provider-jet-template/internal/controller/null/resource"
 	providerconfig "github.com/crossplane-contrib/provider-jet-template/internal/controller/providerconfig"
 )
 
@@ -33,7 +33,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terraform.SetupFn, ws *terraform.WorkspaceStore, cfg *tjconfig.Provider, concurrency int) error {
 	for _, setup := range []func(ctrl.Manager, logging.Logger, workqueue.RateLimiter, terraform.SetupFn, *terraform.WorkspaceStore, *tjconfig.Provider, int) error{
-		order.Setup,
+		resource.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, l, wl, ps, ws, cfg, concurrency); err != nil {

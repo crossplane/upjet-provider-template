@@ -17,6 +17,9 @@ limitations under the License.
 package config
 
 import (
+	// Note(turkenh): we are importing this to embed provider schema document
+	_ "embed"
+
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -26,8 +29,11 @@ const (
 	modulePath     = "github.com/crossplane-contrib/provider-jet-template"
 )
 
+//go:embed schema.json
+var providerSchema string
+
 // GetProvider returns provider configuration
-func GetProvider(resourceMap map[string]*schema.Resource) *tjconfig.Provider {
+func GetProvider() *tjconfig.Provider {
 	defaultResourceFn := func(name string, terraformResource *schema.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
 		r := tjconfig.DefaultResource(name, terraformResource)
 		// Add any provider-specific defaulting here. For example:
@@ -35,7 +41,7 @@ func GetProvider(resourceMap map[string]*schema.Resource) *tjconfig.Provider {
 		return r
 	}
 
-	pc := tjconfig.NewProvider(resourceMap, resourcePrefix, modulePath,
+	pc := tjconfig.NewProviderWithSchema([]byte(providerSchema), resourcePrefix, modulePath,
 		tjconfig.WithDefaultResourceFn(defaultResourceFn))
 
 	for _, configure := range []func(provider *tjconfig.Provider){

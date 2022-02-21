@@ -25,18 +25,18 @@ import (
 	"github.com/crossplane/terrajet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this Order
-func (mg *Order) GetTerraformResourceType() string {
-	return "hashicups_order"
+// GetTerraformResourceType returns Terraform resource type for this Resource
+func (mg *Resource) GetTerraformResourceType() string {
+	return "null_resource"
 }
 
-// GetConnectionDetailsMapping for this Order
-func (tr *Order) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this Resource
+func (tr *Resource) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this Order
-func (tr *Order) GetObservation() (map[string]interface{}, error) {
+// GetObservation of this Resource
+func (tr *Resource) GetObservation() (map[string]interface{}, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (tr *Order) GetObservation() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this Order
-func (tr *Order) SetObservation(obs map[string]interface{}) error {
+// SetObservation for this Resource
+func (tr *Resource) SetObservation(obs map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -54,16 +54,16 @@ func (tr *Order) SetObservation(obs map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this Order
-func (tr *Order) GetID() string {
+// GetID returns ID of underlying Terraform resource of this Resource
+func (tr *Resource) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this Order
-func (tr *Order) GetParameters() (map[string]interface{}, error) {
+// GetParameters of this Resource
+func (tr *Resource) GetParameters() (map[string]interface{}, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -72,8 +72,8 @@ func (tr *Order) GetParameters() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this Order
-func (tr *Order) SetParameters(params map[string]interface{}) error {
+// SetParameters for this Resource
+func (tr *Resource) SetParameters(params map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -81,10 +81,10 @@ func (tr *Order) SetParameters(params map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this Order using its observed tfState.
+// LateInitialize this Resource using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *Order) LateInitialize(attrs []byte) (bool, error) {
-	params := &OrderParameters{}
+func (tr *Resource) LateInitialize(attrs []byte) (bool, error) {
+	params := &ResourceParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -95,6 +95,6 @@ func (tr *Order) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *Order) GetTerraformSchemaVersion() int {
+func (tr *Resource) GetTerraformSchemaVersion() int {
 	return 0
 }
