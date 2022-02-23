@@ -55,6 +55,20 @@ IMAGES = provider-jet-template provider-jet-template-controller
 -include build/makelib/image.mk
 
 # ====================================================================================
+# Fallthrough
+
+# run `make help` to see the targets and options
+
+# We want submodules to be set up the first time `make` is run.
+# We manage the build/ folder and its Makefiles as a submodule.
+# The first time `make` is run, the includes of build/*.mk files will
+# all fail, and this target will be run. The next time, the default as defined
+# by the includes will be run instead.
+fallthrough: submodules
+	@echo Initial setup complete. Running make again . . .
+	@make
+
+# ====================================================================================
 # Setup Terraform for fetching provider schema
 TERRAFORM := $(TOOLS_HOST_DIR)/terraform-$(TERRAFORM_VERSION)
 TERRAFORM_WORKDIR := $(WORK_DIR)/terraform
@@ -83,17 +97,6 @@ generate.init: $(TERRAFORM_PROVIDER_SCHEMA)
 # ====================================================================================
 # Targets
 
-# run `make help` to see the targets and options
-
-# We want submodules to be set up the first time `make` is run.
-# We manage the build/ folder and its Makefiles as a submodule.
-# The first time `make` is run, the includes of build/*.mk files will
-# all fail, and this target will be run. The next time, the default as defined
-# by the includes will be run instead.
-fallthrough: submodules
-	@echo Initial setup complete. Running make again . . .
-	@make
-
 # NOTE: the build submodule currently overrides XDG_CACHE_HOME in order to
 # force the Helm 3 to use the .work/helm directory. This causes Go on Linux
 # machines to use that directory as the build cache as well. We should adjust
@@ -112,7 +115,7 @@ cobertura:
 
 crds.clean:
 	@$(INFO) cleaning generated CRDs
-	@find package/crds -name '*.yaml' -exec sed -i.sed -e '1,2d' {} \; || $(FAIL)
+	@find package/crds -name '*.yaml' -exec sed -i.sed -e '1,1d' {} \; || $(FAIL)
 	@find package/crds -name '*.yaml.sed' -delete || $(FAIL)
 	@$(OK) cleaned generated CRDs
 
