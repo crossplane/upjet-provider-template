@@ -34,18 +34,6 @@ Build, push, and install:
 make all
 ```
 
-Build image:
-
-```console
-make image
-```
-
-Push image:
-
-```console
-make push
-```
-
 Build binary:
 
 ```console
