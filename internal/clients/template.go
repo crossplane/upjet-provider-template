@@ -33,7 +33,6 @@ import (
 const (
 	keyUsername = "username"
 	keyPassword = "password"
-	keyHost     = "host"
 
 	// Template credentials environment variable names
 	envUsername = "HASHICUPS_USERNAME"
@@ -87,9 +86,9 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		}
 
 		// set provider configuration
-		ps.Configuration = map[string]interface{}{
-			"host": templateCreds[keyHost],
-		}
+		/*ps.Configuration = map[string]interface{}{
+			"host": templateCreds["host"],
+		}*/
 		// set environment variables for sensitive provider configuration
 		ps.Env = []string{
 			fmt.Sprintf(fmtEnvVar, envUsername, templateCreds[keyUsername]),

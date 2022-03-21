@@ -20,6 +20,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
@@ -116,5 +117,13 @@ func main() {
 	}
 
 	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Template controllers")
+	if o.Provider.SharedGRPC {
+		binaryPluginPath := os.Getenv(envNativeProviderPath)
+		binaryPluginArgs := strings.Split(os.Getenv(envNativeProviderArgs), ",")
+		log.Info("Starting shared gRPC server", "binaryPluginPath", binaryPluginPath, "binaryPluginArgs", binaryPluginArgs)
+		reattachConfig, err := startSharedServer(log.WithValues("process", binaryPluginPath), binaryPluginPath, binaryPluginArgs...)
+		kingpin.FatalIfError(err, "Cannot get native provider reattach configuration for shared gRPC server mode")
+		kingpin.FatalIfError(os.Setenv(envReattachConfig, reattachConfig), "Cannot set environment for reattach configuration")
+	}
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }

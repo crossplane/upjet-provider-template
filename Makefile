@@ -9,7 +9,8 @@ export TERRAFORM_VERSION := 1.1.6
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/null
 export TERRAFORM_PROVIDER_VERSION := 3.1.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-null
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-null/3.1.0
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-null/${TERRAFORM_PROVIDER_VERSION}
+export TERRAFORM_NATIVE_PROVIDER_BINARY := ${TERRAFORM_PROVIDER_DOWNLOAD_NAME}_v${TERRAFORM_PROVIDER_VERSION}_x5
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
