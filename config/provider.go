@@ -44,11 +44,7 @@ func GetProvider() *tjconfig.Provider {
 	}
 
 	pc := tjconfig.NewProviderWithSchema([]byte(providerSchema), resourcePrefix, modulePath,
-		tjconfig.WithDefaultResourceFn(defaultResourceFn),
-		// Uncomment the following configuration option to
-		// enable the shared gRPC server mode
-		// tjconfig.WithSharedGRPC(true),
-		)
+		tjconfig.WithDefaultResourceFn(defaultResourceFn))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions

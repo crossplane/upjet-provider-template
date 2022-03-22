@@ -127,4 +127,4 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace github.com/crossplane/terrajet => github.com/ulucinar/terrajet v0.0.0-20220321154029-8247a83d648d
+replace github.com/crossplane/terrajet => github.com/ulucinar/terrajet v0.0.0-20220322063943-67343894ed75
