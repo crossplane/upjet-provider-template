@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/crossplane/crossplane-runtime v0.15.1-0.20220315141414-988c9ba9c255
 	github.com/crossplane/crossplane-tools v0.0.0-20220310165030-1f43fc12793e
-	github.com/crossplane/terrajet v0.4.0-rc.0.0.20220325072044-3143bc68c282
+	github.com/crossplane/terrajet v0.4.0-rc.0.0.20220402205027-6ef18d5e0349
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.7.0
 	github.com/pkg/errors v0.9.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
@@ -126,5 +126,3 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.0 // indirect
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
-
-replace github.com/crossplane/terrajet => github.com/ulucinar/terrajet v0.0.0-20220322063943-67343894ed75
