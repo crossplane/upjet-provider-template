@@ -19,30 +19,18 @@ package clients
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/crossplane/terrajet/pkg/terraform"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	"github.com/crossplane/terrajet/pkg/terraform"
 
 	"github.com/crossplane-contrib/provider-jet-template/apis/v1alpha1"
 )
 
 const (
-	keyUsername = "username"
-	keyPassword = "password"
-	keyHost     = "host"
-
-	// Template credentials environment variable names
-	envUsername = "HASHICUPS_USERNAME"
-	envPassword = "HASHICUPS_PASSWORD"
-)
-
-const (
-	fmtEnvVar = "%s=%s"
-
 	// error messages
 	errNoProviderConfig     = "no providerConfigRef provided"
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
@@ -86,15 +74,19 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
-		// set provider configuration
-		ps.Configuration = map[string]interface{}{
-			"host": templateCreds[keyHost],
-		}
 		// set environment variables for sensitive provider configuration
-		ps.Env = []string{
-			fmt.Sprintf(fmtEnvVar, envUsername, templateCreds[keyUsername]),
-			fmt.Sprintf(fmtEnvVar, envPassword, templateCreds[keyPassword]),
-		}
+		// Deprecated: In shared gRPC mode we do not support injecting
+		// credentials via the environment variables. You should specify
+		// credentials via the Terraform main.tf.json instead.
+		/*ps.Env = []string{
+			fmt.Sprintf("%s=%s", "HASHICUPS_USERNAME", templateCreds["username"]),
+			fmt.Sprintf("%s=%s", "HASHICUPS_PASSWORD", templateCreds["password"]),
+		}*/
+		// set credentials in Terraform provider configuration
+		/*ps.Configuration = map[string]interface{}{
+			"username": templateCreds["username"],
+			"password": templateCreds["password"],
+		}*/
 		return ps, nil
 	}
 }
