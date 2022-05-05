@@ -2,7 +2,7 @@
 
 `provider-jet-template` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Terrajet](https://github.com/crossplane/terrajet) code
-generation tools and exposes XRM-conformant managed resources for the 
+generation tools and exposes XRM-conformant managed resources for the
 Template API.
 
 ## Getting Started
@@ -12,6 +12,13 @@ to the [latest release](https://github.com/crossplane-contrib/provider-jet-templ
 ```
 kubectl crossplane install provider crossplane/provider-jet-template:v0.1.0
 ```
+
+Alternatively, you can use declarative installation:
+```
+kubectl apply -f examples/install.yaml
+```
+
+Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
 You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-template).
 
