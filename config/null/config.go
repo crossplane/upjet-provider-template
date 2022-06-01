@@ -17,7 +17,7 @@ limitations under the License.
 package null
 
 import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
+	tjconfig "github.com/upbound/upjet/pkg/config"
 )
 
 // Configure configures the null group

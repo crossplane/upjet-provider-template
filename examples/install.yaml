@@ -4,16 +4,16 @@ kind: ControllerConfig
 metadata:
   name: jet-template-config
   labels:
-    app: crossplane-provider-jet-template
+    app: crossplane-official-provider-template
 spec:
-  image: crossplane/provider-jet-template-controller:v0.1.0
+  image: crossplane/official-provider-template-controller:v0.1.0
   args: ["-d"]
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: crossplane-provider-jet-template
+  name: crossplane-official-provider-template
 spec:
-  package: crossplane/provider-jet-template:v0.1.0
+  package: crossplane/official-provider-template:v0.1.0
   controllerConfigRef:
     name: jet-template-config

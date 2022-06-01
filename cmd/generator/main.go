@@ -23,9 +23,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/crossplane/terrajet/pkg/pipeline"
+	"github.com/upbound/upjet/pkg/pipeline"
 
-	"github.com/crossplane-contrib/provider-jet-template/config"
+	"github.com/upbound/official-provider-template/config"
 )
 
 func main() {

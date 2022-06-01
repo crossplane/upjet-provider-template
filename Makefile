@@ -1,10 +1,10 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME := provider-jet-template
-PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
+PROJECT_NAME := official-provider-template
+PROJECT_REPO := github.com/upbound/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION := 1.1.6
+export TERRAFORM_VERSION := 1.2.1
 
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/null
 export TERRAFORM_PROVIDER_VERSION := 3.1.0
@@ -52,7 +52,7 @@ GO111MODULE = on
 # Setup Images
 
 DOCKER_REGISTRY ?= crossplane
-IMAGES = provider-jet-template provider-jet-template-controller
+IMAGES = official-provider-template official-provider-template-controller
 -include build/makelib/image.mk
 
 # ====================================================================================

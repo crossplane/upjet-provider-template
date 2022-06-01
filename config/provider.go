@@ -20,15 +20,16 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/crossplane-contrib/provider-jet-template/config/null"
+	tjconfig "github.com/upbound/upjet/pkg/config"
+
+	"github.com/upbound/official-provider-template/config/null"
 )
 
 const (
 	resourcePrefix = "template"
-	modulePath     = "github.com/crossplane-contrib/provider-jet-template"
+	modulePath     = "github.com/upbound/official-provider-template"
 )
 
 //go:embed schema.json
