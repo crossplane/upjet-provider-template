@@ -11,6 +11,7 @@ import (
 // Configure configures the null group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("null_resource", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+		r.Kind = "Resource"
+		// And other overrides.
 	})
 }
