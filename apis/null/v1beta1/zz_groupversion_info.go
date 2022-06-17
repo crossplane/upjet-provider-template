@@ -6,8 +6,8 @@ Copyright 2022 Upbound Inc.
 
 // +kubebuilder:object:generate=true
 // +groupName=null.template.jet.crossplane.io
-// +versionName=v1alpha1
-package v1alpha1
+// +versionName=v1beta1
+package v1beta1
 
 import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -17,7 +17,7 @@ import (
 // Package type metadata.
 const (
 	CRDGroup   = "null.template.jet.crossplane.io"
-	CRDVersion = "v1alpha1"
+	CRDVersion = "v1beta1"
 )
 
 var (

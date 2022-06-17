@@ -8,8 +8,6 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-
 	tjconfig "github.com/upbound/upjet/pkg/config"
 
 	"github.com/upbound/official-provider-template/config/null"
@@ -25,15 +23,11 @@ var providerSchema string
 
 // GetProvider returns provider configuration
 func GetProvider() *tjconfig.Provider {
-	defaultResourceFn := func(name string, terraformResource *schema.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
-		r := tjconfig.DefaultResource(name, terraformResource)
-		// Add any provider-specific defaulting here. For example:
-		//   r.ExternalName = tjconfig.IdentifierFromProvider
-		return r
-	}
-
-	pc := tjconfig.NewProviderWithSchema([]byte(providerSchema), resourcePrefix, modulePath,
-		tjconfig.WithDefaultResourceFn(defaultResourceFn))
+	pc := tjconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, "",
+		tjconfig.WithIncludeList(ExternalNameConfigured()),
+		tjconfig.WithDefaultResourceOptions(
+			ExternalNameConfigurations(),
+		))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
