@@ -1,5 +1,3 @@
-//go:build generate
-
 /*
 Copyright 2021 Upbound Inc.
 */
@@ -13,16 +11,17 @@ import (
 
 	"github.com/upbound/upjet/pkg/pipeline"
 
-	"github.com/upbound/official-provider-template/config"
+	"github.com/upbound/upjet-provider-template/config"
 )
 
 func main() {
 	if len(os.Args) < 2 || os.Args[1] == "" {
 		panic("root directory is required to be given as argument")
 	}
-	absRootDir, err := filepath.Abs(os.Args[1])
+	rootDir := os.Args[1]
+	absRootDir, err := filepath.Abs(rootDir)
 	if err != nil {
-		panic(fmt.Sprintf("cannot calculate the absolute path of %s", os.Args[1]))
+		panic(fmt.Sprintf("cannot calculate the absolute path with %s", rootDir))
 	}
 	pipeline.Run(config.GetProvider(), absRootDir)
 }

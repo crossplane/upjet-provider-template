@@ -13,16 +13,15 @@ git grep -l 'template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/template/${Prov
 git grep -l 'Template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/Template/${ProviderNameUpper}/g"
 # We need to be careful while replacing "template" keyword in go.mod as it could tamper
 # some imported packages under require section.
-sed -i.bak "s/official-provider-template/provider-${ProviderNameLower}/g" go.mod
+sed -i.bak "s/upjet-provider-template/provider-${ProviderNameLower}/g" go.mod
 
 # Clean up the .bak files created by sed
 git clean -fd
 
 git mv "internal/clients/template.go" "internal/clients/${ProviderNameLower}.go"
-git mv "cluster/images/official-provider-template" "cluster/images/provider-${ProviderNameLower}"
-git mv "cluster/images/official-provider-template-controller" "cluster/images/provider-${ProviderNameLower}-controller"
+git mv "cluster/images/upjet-provider-template" "cluster/images/provider-${ProviderNameLower}"
 
 # We need to remove this api folder otherwise first `make generate` fails with
 # the following error probably due to some optimizations in go generate with v1.17:
-# generate: open /Users/hasanturken/Workspace/crossplane-contrib/official-provider-template/apis/null/v1alpha1/zz_generated.deepcopy.go: no such file or directory
+# generate: open /Users/hasanturken/Workspace/crossplane-contrib/upjet-provider-template/apis/null/v1alpha1/zz_generated.deepcopy.go: no such file or directory
 rm -rf apis/null

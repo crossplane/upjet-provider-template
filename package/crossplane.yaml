@@ -1,7 +1,4 @@
 apiVersion: meta.pkg.crossplane.io/v1alpha1
 kind: Provider
 metadata:
-  name: official-provider-template
-spec:
-  controller:
-    image: DOCKER_REGISTRY/official-provider-template-controller:VERSION
+  name: upjet-provider-template

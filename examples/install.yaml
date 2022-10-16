@@ -1,19 +1,6 @@
----
-apiVersion: pkg.crossplane.io/v1alpha1
-kind: ControllerConfig
-metadata:
-  name: jet-template-config
-  labels:
-    app: crossplane-official-provider-template
-spec:
-  image: crossplane/official-provider-template-controller:v0.1.0
-  args: ["-d"]
----
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: crossplane-official-provider-template
+  name: upjet-provider-template
 spec:
-  package: crossplane/official-provider-template:v0.1.0
-  controllerConfigRef:
-    name: jet-template-config
+  package: upbound/upjet-provider-template:v0.1.0
