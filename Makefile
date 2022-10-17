@@ -1,7 +1,7 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME := official-provider-template
+PROJECT_NAME := upjet-provider-template
 PROJECT_REPO := github.com/upbound/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.2.1
@@ -41,7 +41,9 @@ GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 # correctly.
 export GOPRIVATE = github.com/upbound/*
 
-GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider
+GO_REQUIRED_VERSION ?= 1.19
+GOLANGCILINT_VERSION ?= 1.50.0
+GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
 GO111MODULE = on
@@ -50,14 +52,35 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Kubernetes tools
 
+KIND_VERSION = v0.15.0
+UP_VERSION = v0.14.0
+UP_CHANNEL = stable
 -include build/makelib/k8s_tools.mk
 
 # ====================================================================================
 # Setup Images
 
-DOCKER_REGISTRY ?= crossplane
-IMAGES = official-provider-template official-provider-template-controller
--include build/makelib/image.mk
+REGISTRY_ORGS ?= xpkg.upbound.io/upbound
+IMAGES = $(PROJECT_NAME)
+-include build/makelib/imagelight.mk
+
+# ====================================================================================
+# Setup XPKG
+
+XPKG_REG_ORGS ?= xpkg.upbound.io/upbound
+# NOTE(hasheddan): skip promoting on xpkg.upbound.io as channel tags are
+# inferred.
+XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
+XPKGS = $(PROJECT_NAME)
+-include build/makelib/xpkg.mk
+
+# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
+# we ensure image is present in daemon.
+xpkg.build.upjet-provider-template: do.build.images
+
+# NOTE(hasheddan): we ensure up is installed prior to running platform-specific
+# build steps in parallel to avoid encountering an installation race condition.
+build.init: $(UP)
 
 # ====================================================================================
 # Fallthrough

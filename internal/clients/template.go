@@ -15,7 +15,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/terraform"
 
-	"github.com/upbound/official-provider-template/apis/v1alpha1"
+	"github.com/upbound/upjet-provider-template/apis/v1beta1"
 )
 
 const (
@@ -43,12 +43,12 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if configRef == nil {
 			return ps, errors.New(errNoProviderConfig)
 		}
-		pc := &v1alpha1.ProviderConfig{}
+		pc := &v1beta1.ProviderConfig{}
 		if err := client.Get(ctx, types.NamespacedName{Name: configRef.Name}, pc); err != nil {
 			return ps, errors.Wrap(err, errGetProviderConfig)
 		}
 
-		t := resource.NewProviderConfigUsageTracker(client, &v1alpha1.ProviderConfigUsage{})
+		t := resource.NewProviderConfigUsageTracker(client, &v1beta1.ProviderConfigUsage{})
 		if err := t.Track(ctx, mg); err != nil {
 			return ps, errors.Wrap(err, errTrackUsage)
 		}

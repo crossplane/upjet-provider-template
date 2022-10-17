@@ -10,8 +10,9 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1beta1 "github.com/upbound/official-provider-template/apis/null/v1beta1"
-	v1alpha1 "github.com/upbound/official-provider-template/apis/v1alpha1"
+	v1beta1 "github.com/upbound/upjet-provider-template/apis/null/v1beta1"
+	v1alpha1 "github.com/upbound/upjet-provider-template/apis/v1alpha1"
+	v1beta1apis "github.com/upbound/upjet-provider-template/apis/v1beta1"
 )
 
 func init() {
@@ -19,6 +20,7 @@ func init() {
 	AddToSchemes = append(AddToSchemes,
 		v1beta1.SchemeBuilder.AddToScheme,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1beta1apis.SchemeBuilder.AddToScheme,
 	)
 }
 
