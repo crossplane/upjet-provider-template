@@ -4,7 +4,7 @@
 PROJECT_NAME := upjet-provider-template
 PROJECT_REPO := github.com/upbound/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION := 1.2.1
+export TERRAFORM_VERSION := 1.3.3
 
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/null
 export TERRAFORM_PROVIDER_REPO := https://github.com/hashicorp/terraform-provider-null
@@ -38,16 +38,11 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-# We need to specify which repos might require login for go commands to authorize
-# correctly.
-export GOPRIVATE = github.com/upbound/*
-
 GO_REQUIRED_VERSION ?= 1.19
 GOLANGCILINT_VERSION ?= 1.50.0
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
-GO111MODULE = on
 -include build/makelib/golang.mk
 
 # ====================================================================================

@@ -8,7 +8,7 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	tjconfig "github.com/upbound/upjet/pkg/config"
+	ujconfig "github.com/upbound/upjet/pkg/config"
 
 	"github.com/upbound/upjet-provider-template/config/null"
 )
@@ -25,14 +25,14 @@ var providerSchema string
 var providerMetadata string
 
 // GetProvider returns provider configuration
-func GetProvider() *tjconfig.Provider {
-	pc := tjconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, nil,
-		tjconfig.WithIncludeList(ExternalNameConfigured()),
-		tjconfig.WithDefaultResourceOptions(
+func GetProvider() *ujconfig.Provider {
+	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
+		ujconfig.WithIncludeList(ExternalNameConfigured()),
+		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 		))
 
-	for _, configure := range []func(provider *tjconfig.Provider){
+	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		null.Configure,
 	} {

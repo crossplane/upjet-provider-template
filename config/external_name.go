@@ -19,7 +19,6 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 func ExternalNameConfigurations() config.ResourceOption {
 	return func(r *config.Resource) {
 		if e, ok := ExternalNameConfigs[r.Name]; ok {
-			r.Version = "v1beta1"
 			r.ExternalName = e
 		}
 	}
