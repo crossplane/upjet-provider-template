@@ -14,7 +14,7 @@ git grep -l "upbound/provider-${PROVIDER_NAME_LOWER}" -- ${REPLACE_FILES} | xarg
 git grep -l 'Template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/Template/${PROVIDER_NAME_NORMAL}/g"
 # We need to be careful while replacing "template" keyword in go.mod as it could tamper
 # some imported packages under require section.
-sed -i.bak "s/upjet-provider-template/provider-${PROVIDER_NAME_LOWER}/g" go.mod
+sed -i.bak "s|upbound/provider-${PROVIDER_NAME_LOWER}|${ORGANIZATION_NAME}/provider-${PROVIDER_NAME_LOWER}|g" go.mod
 
 # Clean up the .bak files created by sed
 git clean -fd
