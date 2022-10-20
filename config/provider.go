@@ -21,6 +21,9 @@ const (
 //go:embed schema.json
 var providerSchema string
 
+//go:embed provider-metadata.yaml
+var providerMetadata string
+
 // GetProvider returns provider configuration
 func GetProvider() *tjconfig.Provider {
 	pc := tjconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, nil,

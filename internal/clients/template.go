@@ -57,8 +57,8 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		templateCreds := map[string]string{}
-		if err := json.Unmarshal(data, &templateCreds); err != nil {
+		creds := map[string]string{}
+		if err := json.Unmarshal(data, &creds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
