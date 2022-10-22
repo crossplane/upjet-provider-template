@@ -14,7 +14,6 @@ env:
   GOLANGCI_VERSION: 'v1.50.0'
   DOCKER_BUILDX_VERSION: 'v0.8.2'
 
-  UPBOUND_BOT_GITHUB_TOKEN: ${{ secrets.UPBOUND_BOT_GITHUB_TOKEN }}
 jobs:
   detect-noop:
     runs-on: ubuntu-22.04
@@ -63,12 +62,6 @@ jobs:
           path: .work/pkg
           key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum') }}
           restore-keys: ${{ runner.os }}-pkg-
-      
-      # git needs to be able to access private repositories under upbound.
-      - name: Login to Github
-        run: |
-          git config --global user.name "upbound-bot"
-          echo "machine github.com login upbound-bot password $UPBOUND_BOT_GITHUB_TOKEN" > ~/.netrc
 
       - name: Vendor Dependencies
         run: make vendor vendor.check
@@ -189,12 +182,12 @@ jobs:
           version: ${{ env.DOCKER_BUILDX_VERSION }}
           install: true
 
-#      - name: Login to Upbound
-#        uses: docker/login-action@v1
-#        with:
-#          registry: xpkg.upbound.io
-#          username: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_USR }}
-#          password: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_PSW }}
+      - name: Login to Upbound
+        uses: docker/login-action@v1
+        with:
+          registry: xpkg.upbound.io
+          username: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_USR }}
+          password: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_PSW }}
 
       - name: Checkout
         uses: actions/checkout@v2

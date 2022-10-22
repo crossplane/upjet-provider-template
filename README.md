@@ -1,4 +1,4 @@
-# Official Provider Template
+# Provider Template
 
 `upjet-provider-template` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Upjet](https://github.com/upbound/upjet) code
@@ -8,14 +8,21 @@ Template API.
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://github.com/upbound/upjet-provider-template/releases):
+to the [latest release](https://marketplace.upbound.io/providers/upbound/upjet-provider-template):
 ```
-kubectl crossplane install provider upbound/upjet-provider-template:v0.1.0
+up ctp provider install upbound/upjet-provider-template:v0.1.0
 ```
 
 Alternatively, you can use declarative installation:
 ```
-kubectl apply -f examples/install.yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: upjet-provider-template
+spec:
+  package: upbound/upjet-provider-template:v0.1.0
+EOF
 ```
 
 Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.

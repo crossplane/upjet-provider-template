@@ -4,13 +4,14 @@
 PROJECT_NAME := upjet-provider-template
 PROJECT_REPO := github.com/upbound/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION := 1.2.1
+export TERRAFORM_VERSION := 1.3.3
 
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/null
+export TERRAFORM_PROVIDER_REPO := https://github.com/hashicorp/terraform-provider-null
 export TERRAFORM_PROVIDER_VERSION := 3.1.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-null
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-null/3.1.0
 export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-null_v3.1.0_x5
+export TERRAFORM_DOCS_PATH := docs/resources
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -37,16 +38,11 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-# We need to specify which repos might require login for go commands to authorize
-# correctly.
-export GOPRIVATE = github.com/upbound/*
-
 GO_REQUIRED_VERSION ?= 1.19
 GOLANGCILINT_VERSION ?= 1.50.0
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
-GO111MODULE = on
 -include build/makelib/golang.mk
 
 # ====================================================================================
@@ -119,9 +115,16 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 	@$(TERRAFORM) -chdir=$(TERRAFORM_WORKDIR) providers schema -json=true > $(TERRAFORM_PROVIDER_SCHEMA) 2>> $(TERRAFORM_WORKDIR)/terraform-logs.txt
 	@$(OK) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 
-generate.init: $(TERRAFORM_PROVIDER_SCHEMA)
+pull-docs:
+	@if [ ! -d "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" ]; then \
+  		mkdir -p "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" && \
+		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)"; \
+	fi
+	@git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"
 
-.PHONY: $(TERRAFORM_PROVIDER_SCHEMA)
+generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
+
+.PHONY: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
 # ====================================================================================
 # Targets
 
