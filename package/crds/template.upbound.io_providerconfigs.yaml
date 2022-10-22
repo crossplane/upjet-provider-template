@@ -12,7 +12,7 @@ spec:
     categories:
     - crossplane
     - provider
-    - templatejet
+    - template
     kind: ProviderConfig
     listKind: ProviderConfigList
     plural: providerconfigs
