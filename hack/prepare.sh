@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euoX pipefail
+set -euox pipefail
 
 read -r -p "Lower case provider name (ex. github): " PROVIDER_NAME_LOWER
 read -r -p "Normal case provider name (ex. GitHub): " PROVIDER_NAME_NORMAL
