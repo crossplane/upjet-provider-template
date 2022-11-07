@@ -168,7 +168,13 @@ uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
 	@$(OK) running automated tests
 
-e2e: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME) uptest
+local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
+	@$(INFO) running locally built provider
+	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
+	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
+	@$(OK) running locally built provider
+
+e2e: local-dev local-deploy
 
 .PHONY: cobertura submodules fallthrough run crds.clean
 
