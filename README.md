@@ -58,3 +58,4 @@ make build
 
 For filing bugs, suggesting improvements, or requesting new features, please
 open an [issue](https://github.com/upbound/upjet-provider-template/issues).
+
