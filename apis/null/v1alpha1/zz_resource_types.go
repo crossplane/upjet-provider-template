@@ -15,6 +15,9 @@ import (
 
 type ResourceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
+	Triggers map[string]*string `json:"triggers,omitempty" tf:"triggers,omitempty"`
 }
 
 type ResourceParameters struct {
