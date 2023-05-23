@@ -29,3 +29,5 @@ git mv "cluster/images/upjet-provider-template" "cluster/images/provider-${PROVI
 # the following error probably due to some optimizations in go generate with v1.17:
 # generate: open /Users/hasanturken/Workspace/crossplane-contrib/upjet-provider-template/apis/null/v1alpha1/zz_generated.deepcopy.go: no such file or directory
 rm -rf apis/null
+# remove the sample directory which was a configuration in the template
+rm -rf config/null
