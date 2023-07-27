@@ -18,6 +18,7 @@ git grep -l 'Template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/Template/${PROV
 # some imported packages under require section.
 sed -i.bak "s|upbound/upjet-provider-template|${ORGANIZATION_NAME}/provider-${PROVIDER_NAME_LOWER}|g" go.mod
 sed -i.bak "s|PROJECT_REPO ?= github.com/upbound/|PROJECT_REPO ?= github.com/${ORGANIZATION_NAME}/|g" Makefile
+sed -i.bak "s/\[YEAR\]/$(date +%Y)/g" LICENSE
 
 # Clean up the .bak files created by sed
 git clean -fd
