@@ -38,3 +38,5 @@ git mv "cluster/images/upjet-provider-template" "cluster/images/provider-${PROVI
 rm -rf apis/null
 # remove the sample directory which was a configuration in the template
 rm -rf config/null
+# remove the validation ci step which was a configuration in the template for validation with uptest
+rm -rf .github/workflows/e2e-template-validation.yaml
