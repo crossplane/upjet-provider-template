@@ -13,6 +13,12 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ResourceInitParameters struct {
+
+	// A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
+	Triggers map[string]*string `json:"triggers,omitempty" tf:"triggers,omitempty"`
+}
+
 type ResourceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -31,6 +37,18 @@ type ResourceParameters struct {
 type ResourceSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ResourceParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ResourceInitParameters `json:"initProvider,omitempty"`
 }
 
 // ResourceStatus defines the observed state of Resource.
@@ -41,7 +59,7 @@ type ResourceStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Resource is the Schema for the Resources API. <no value>
+// Resource is the Schema for the Resources API. The null_resource resource implements the standard resource lifecycle but takes no further action. The triggers argument allows specifying an arbitrary set of values that, when changed, will cause the resource to be replaced.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

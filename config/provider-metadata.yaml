@@ -1,9 +1,36 @@
 name: hashicorp/null
 resources:
-    null_resource Resource - terraform-provider-null:
+    null_resource:
         subCategory: ""
         description: The null_resource resource implements the standard resource lifecycle but takes no further action. The triggers argument allows specifying an arbitrary set of values that, when changed, will cause the resource to be replaced.
-        name: null_resource Resource - terraform-provider-null
+        name: null_resource
         title: null_resource Resource - terraform-provider-null
+        examples:
+            - name: cluster
+              manifest: |-
+                {
+                  "connection": [
+                    {
+                      "host": "${element(aws_instance.cluster.*.public_ip, 0)}"
+                    }
+                  ],
+                  "provisioner": {
+                    "remote-exec": [
+                      {
+                        "inline": [
+                          "bootstrap-cluster.sh ${join(\" \", aws_instance.cluster.*.private_ip)}"
+                        ]
+                      }
+                    ]
+                  },
+                  "triggers": {
+                    "cluster_instance_ids": "${join(\",\", aws_instance.cluster.*.id)}"
+                  }
+                }
+              dependencies:
+                aws_instance.cluster: |-
+                    {
+                      "count": 3
+                    }
         argumentDocs: {}
         importStatements: []
