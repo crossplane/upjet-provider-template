@@ -4,7 +4,7 @@
 PROJECT_NAME ?= upjet-provider-template
 PROJECT_REPO ?= github.com/upbound/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION ?= 1.3.3
+export TERRAFORM_VERSION ?= 1.2.1
 
 export TERRAFORM_PROVIDER_SOURCE ?= hashicorp/null
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/hashicorp/terraform-provider-null
