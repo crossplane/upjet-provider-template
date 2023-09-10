@@ -18,7 +18,7 @@ git grep -l 'Template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/Template/${PROV
 # shellcheck disable=SC2086
 git grep -l "upbound.io" -- "apis/v1*" | xargs sed -i.bak "s|upbound.io|${CRD_ROOT_GROUP}|g"
 # shellcheck disable=SC2086
-git grep -l "ujconfig\.WithRootGroup(\"template.upbound\.io\")" -- "config/provider.go" | xargs sed -i.bak "s|ujconfig.WithRootGroup(\"template.upbound.io\")|ujconfig.WithRootGroup(\"${CRD_ROOT_GROUP}\")|g"
+git grep -l "ujconfig\.WithRootGroup(\"${PROVIDER_NAME_LOWER}.upbound\.io\")" -- "config/provider.go" | xargs sed -i.bak "s|ujconfig.WithRootGroup(\"${PROVIDER_NAME_LOWER}.upbound.io\")|ujconfig.WithRootGroup(\"${CRD_ROOT_GROUP}\")|g"
 
 # We need to be careful while replacing "template" keyword in go.mod as it could tamper
 # some imported packages under require section.
