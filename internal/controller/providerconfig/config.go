@@ -1,6 +1,6 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 package providerconfig
 
@@ -11,7 +11,7 @@ import (
 	"github.com/crossplane/upjet/pkg/controller"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/upbound/upjet-provider-template/apis/v1beta1"
+	"github.com/crossplane/upjet-provider-template/apis/v1beta1"
 )
 
 // Setup adds a controller that reconciles ProviderConfigs by accounting for

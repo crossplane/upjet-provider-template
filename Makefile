@@ -1,10 +1,14 @@
+# SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: Apache-2.0
+
 # ====================================================================================
 # Setup Project
 
 PROJECT_NAME ?= upjet-provider-template
-PROJECT_REPO ?= github.com/upbound/$(PROJECT_NAME)
+PROJECT_REPO ?= github.com/crossplane/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION ?= 1.2.1
+export TERRAFORM_VERSION ?= 1.5.5
 
 export TERRAFORM_PROVIDER_SOURCE ?= hashicorp/null
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/hashicorp/terraform-provider-null

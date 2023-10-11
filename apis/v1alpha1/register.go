@@ -1,6 +1,6 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 package v1alpha1
 
@@ -13,7 +13,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "template.upbound.io"
+	Group   = "template.crossplane.io"
 	Version = "v1alpha1"
 )
 

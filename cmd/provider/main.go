@@ -1,6 +1,6 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 package main
 
@@ -26,12 +26,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/upbound/upjet-provider-template/apis"
-	"github.com/upbound/upjet-provider-template/apis/v1alpha1"
-	"github.com/upbound/upjet-provider-template/config"
-	"github.com/upbound/upjet-provider-template/internal/clients"
-	"github.com/upbound/upjet-provider-template/internal/controller"
-	"github.com/upbound/upjet-provider-template/internal/features"
+	"github.com/crossplane/upjet-provider-template/apis"
+	"github.com/crossplane/upjet-provider-template/apis/v1alpha1"
+	"github.com/crossplane/upjet-provider-template/config"
+	"github.com/crossplane/upjet-provider-template/internal/clients"
+	"github.com/crossplane/upjet-provider-template/internal/controller"
+	"github.com/crossplane/upjet-provider-template/internal/features"
 )
 
 func main() {

@@ -1,9 +1,9 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 //go:build generate
 // +build generate
-
-/*
-Copyright 2021 Upbound Inc.
-*/
 
 // NOTE: See the below link for details on what is happening here.
 // https://github.com/golang/go/wiki/Modules#how-can-i-track-tool-dependencies-for-a-module

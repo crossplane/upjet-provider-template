@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Provider Template
 
 `upjet-provider-template` is a [Crossplane](https://crossplane.io/) provider that
@@ -8,9 +14,9 @@ Template API.
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://marketplace.upbound.io/providers/upbound/upjet-provider-template):
+to the [latest release](https://marketplace.upbound.io/providers/crossplane/upjet-provider-template):
 ```
-up ctp provider install upbound/upjet-provider-template:v0.1.0
+up ctp provider install crossplane/upjet-provider-template:v0.1.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -21,13 +27,13 @@ kind: Provider
 metadata:
   name: upjet-provider-template
 spec:
-  package: upbound/upjet-provider-template:v0.1.0
+  package: crossplane/upjet-provider-template:v0.1.0
 EOF
 ```
 
 Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
-You can see the API reference [here](https://doc.crds.dev/github.com/upbound/upjet-provider-template).
+You can see the API reference [here](https://doc.crds.dev/github.com/crossplane/upjet-provider-template).
 
 ## Developing
 
@@ -57,4 +63,4 @@ make build
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/upbound/upjet-provider-template/issues).
+open an [issue](https://github.com/crossplane/upjet-provider-template/issues).

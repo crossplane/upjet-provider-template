@@ -1,6 +1,10 @@
-module github.com/upbound/upjet-provider-template
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
 
-go 1.19
+module github.com/crossplane/upjet-provider-template
+
+go 1.20
 
 require (
 	github.com/crossplane/crossplane-runtime v1.14.0-rc.0.0.20231011070344-cc691421c2e5

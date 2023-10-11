@@ -1,6 +1,6 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 package config
 
@@ -10,12 +10,12 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 
-	"github.com/upbound/upjet-provider-template/config/null"
+	"github.com/crossplane/upjet-provider-template/config/null"
 )
 
 const (
 	resourcePrefix = "template"
-	modulePath     = "github.com/upbound/upjet-provider-template"
+	modulePath     = "github.com/crossplane/upjet-provider-template"
 )
 
 //go:embed schema.json
@@ -27,7 +27,7 @@ var providerMetadata string
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("template.upbound.io"),
+		ujconfig.WithRootGroup("template.crossplane.io"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(

@@ -1,4 +1,8 @@
-apiVersion: template.upbound.io/v1alpha1
+# SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: template.crossplane.io/v1alpha1
 kind: StoreConfig
 metadata:
   name: vault

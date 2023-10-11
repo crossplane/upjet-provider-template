@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: Apache-2.0
+
 FROM alpine:3.17.1
 RUN apk --no-cache add ca-certificates bash
 

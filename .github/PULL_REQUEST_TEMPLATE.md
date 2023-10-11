@@ -1,4 +1,10 @@
 <!--
+SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<!--
 Thank you for helping to improve Crossplane!
 
 Please read through https://git.io/fj2m9 if this is your first time opening a
