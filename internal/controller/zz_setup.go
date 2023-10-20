@@ -5,12 +5,10 @@
 package controller
 
 import (
-	ctrl "sigs.k8s.io/controller-runtime"
-
-	"github.com/crossplane/upjet/pkg/controller"
-
 	resource "github.com/crossplane/upjet-provider-template/internal/controller/null/resource"
 	providerconfig "github.com/crossplane/upjet-provider-template/internal/controller/providerconfig"
+	"github.com/crossplane/upjet/pkg/controller"
+	ctrl "sigs.k8s.io/controller-runtime"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to

@@ -5,12 +5,11 @@
 package config
 
 import (
-	// Note(turkenh): we are importing this to embed provider schema document
-	_ "embed"
-
+	"github.com/crossplane/upjet-provider-template/config/null"
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 
-	"github.com/crossplane/upjet-provider-template/config/null"
+	// Note(turkenh): we are importing this to embed provider schema document
+	_ "embed"
 )
 
 const (

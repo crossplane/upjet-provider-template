@@ -5,13 +5,13 @@
 package providerconfig
 
 import (
-	"github.com/crossplane/crossplane-runtime/pkg/event"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/providerconfig"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
+	"github.com/crossplane/upjet-provider-template/apis/v1beta1"
 	"github.com/crossplane/upjet/pkg/controller"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/crossplane/upjet-provider-template/apis/v1beta1"
+	"github.com/crossplane/crossplane-runtime/pkg/event"
+	"github.com/crossplane/crossplane-runtime/pkg/reconciler/providerconfig"
+	"github.com/crossplane/crossplane-runtime/pkg/resource"
 )
 
 // Setup adds a controller that reconciles ProviderConfigs by accounting for

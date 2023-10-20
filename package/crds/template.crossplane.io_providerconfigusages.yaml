@@ -7,7 +7,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
-  name: providerconfigusages.template.upbound.io
+  name: providerconfigusages.template.crossplane.io
 spec:
   group: template.crossplane.io
   names:
