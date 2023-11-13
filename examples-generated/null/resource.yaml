@@ -1,0 +1,18 @@
+apiVersion: null.template.upbound.io/v1alpha1
+kind: Resource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: null/v1alpha1/resource
+  labels:
+    testing.upbound.io/example-name: cluster
+  name: cluster
+spec:
+  forProvider:
+    connection:
+    - host: ${element(aws_instance.cluster.*.public_ip, 0)}
+    provisioner:
+      remote-exec:
+      - inline:
+        - bootstrap-cluster.sh ${join(" ", aws_instance.cluster.*.private_ip)}
+    triggers:
+      cluster_instance_ids: ${join(",", aws_instance.cluster.*.id)}

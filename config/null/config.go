@@ -5,7 +5,7 @@ Copyright 2021 Upbound Inc.
 package null
 
 import (
-	ujconfig "github.com/upbound/upjet/pkg/config"
+	ujconfig "github.com/crossplane/upjet/pkg/config"
 )
 
 // Configure configures the null group
