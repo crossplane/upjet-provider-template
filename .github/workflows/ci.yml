@@ -312,4 +312,5 @@ jobs:
           path: _output/**
 
       - name: Publish Artifacts
+        if: env.UPBOUND_MARKETPLACE_PUSH_ROBOT_USR != ''
         run: make publish BRANCH_NAME=${GITHUB_REF##*/}
