@@ -23,7 +23,7 @@ git grep -l "ujconfig\.WithRootGroup(\"${PROVIDER_NAME_LOWER}.upbound\.io\")" --
 # We need to be careful while replacing "template" keyword in go.mod as it could tamper
 # some imported packages under require section.
 sed -i.bak "s|upbound/upjet-provider-template|${ORGANIZATION_NAME}/provider-${PROVIDER_NAME_LOWER}|g" go.mod
-sed -i.bak "s|PROJECT_REPO ?= github.com/upbound/|PROJECT_REPO ?= github.com/${ORGANIZATION_NAME}/|g" Makefile
+sed -i.bak -e "s|PROJECT_REPO ?= github.com/upbound/|PROJECT_REPO ?= github.com/${ORGANIZATION_NAME}/|g" -e "s|\(blob/main/internal/\)${PROVIDER_NAME_LOWER}s|\1templates|g" Makefile
 sed -i.bak "s/\[YEAR\]/$(date +%Y)/g" LICENSE
 
 # Clean up the .bak files created by sed
