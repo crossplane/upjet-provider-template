@@ -241,7 +241,13 @@ jobs:
 
   publish-artifacts:
     runs-on: ubuntu-22.04
-    needs: detect-noop
+    needs:
+      - detect-noop
+      - report-breaking-changes
+      - lint
+      - check-diff
+      - unit-tests
+      - local-deploy
     if: needs.detect-noop.outputs.noop != 'true'
 
     steps:
