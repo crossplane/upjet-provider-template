@@ -162,6 +162,7 @@ run: go.build
 
 # ====================================================================================
 # End to End Testing
+CROSSPLANE_VERSION = 1.16.0
 CROSSPLANE_NAMESPACE = upbound-system
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
@@ -242,3 +243,7 @@ crossplane.help:
 help-special: crossplane.help
 
 .PHONY: crossplane.help help-special
+
+# TODO(negz): Update CI to use these targets.
+vendor: modules.download
+vendor.check: modules.check
