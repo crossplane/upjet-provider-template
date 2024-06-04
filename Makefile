@@ -8,8 +8,7 @@ export TERRAFORM_VERSION ?= 1.5.7
 
 # Do not allow a version of terraform greater than 1.5.x, due to versions 1.6+ being
 # licensed under BSL, which is not permitted.
-export TERRAFORM_VERSION_CEILING ?= 1.6
-TERRAFORM_VERSION_VALID := $(shell [ $(TERRAFORM_VERSION) = `echo "$(TERRAFORM_VERSION)\n$(TERRAFORM_VERSION_CEILING)" | sort -V | head -n1` ] && echo 1 || echo 0)
+TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAFORM_VERSION)\n1.6" | sort -V | head -n1`" ] && echo 1 || echo 0)
 
 export TERRAFORM_PROVIDER_SOURCE ?= hashicorp/null
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/hashicorp/terraform-provider-null
@@ -108,7 +107,7 @@ TERRAFORM_PROVIDER_SCHEMA := config/schema.json
 
 check-terraform-version:
 ifneq ($(TERRAFORM_VERSION_VALID),1)
-	$(error invalid TERRAFORM_VERSION $(TERRAFORM_VERSION), must be less than $(TERRAFORM_VERSION_CEILING))
+	$(error invalid TERRAFORM_VERSION $(TERRAFORM_VERSION), must be less than 1.6.0 since that version introduced a not permitted BSL license))
 endif
 
 $(TERRAFORM): check-terraform-version
