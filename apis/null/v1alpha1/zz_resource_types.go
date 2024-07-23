@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -20,6 +16,7 @@ import (
 type ResourceInitParameters struct {
 
 	// A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
+	// +mapType=granular
 	Triggers map[string]*string `json:"triggers,omitempty" tf:"triggers,omitempty"`
 }
 
@@ -27,6 +24,7 @@ type ResourceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
+	// +mapType=granular
 	Triggers map[string]*string `json:"triggers,omitempty" tf:"triggers,omitempty"`
 }
 
@@ -34,6 +32,7 @@ type ResourceParameters struct {
 
 	// A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Triggers map[string]*string `json:"triggers,omitempty" tf:"triggers,omitempty"`
 }
 
@@ -61,13 +60,14 @@ type ResourceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Resource is the Schema for the Resources API. The null_resource resource implements the standard resource lifecycle but takes no further action. The triggers argument allows specifying an arbitrary set of values that, when changed, will cause the resource to be replaced.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,template}
 type Resource struct {
 	metav1.TypeMeta   `json:",inline"`
