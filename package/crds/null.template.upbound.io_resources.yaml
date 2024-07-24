@@ -36,8 +36,8 @@ spec:
       openAPIV3Schema:
         description: Resource is the Schema for the Resources API. The null_resource
           resource implements the standard resource lifecycle but takes no further
-          action. The triggers argument allows specifying an arbitrary set of values
-          that, when changed, will cause the resource to be replaced.
+          action.hashicorp. The triggers argument allows specifying an arbitrary set
+          of values that, when changed, will cause the resource to be replaced.
         properties:
           apiVersion:
             description: |-
@@ -78,9 +78,9 @@ spec:
                   triggers:
                     additionalProperties:
                       type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
+                    description: |-
+                      running any associated provisioners.
+                      A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object
@@ -100,9 +100,9 @@ spec:
                   triggers:
                     additionalProperties:
                       type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
+                    description: |-
+                      running any associated provisioners.
+                      A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object
@@ -279,13 +279,15 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: (String) This is set to a random value at create
+                      time.
                     type: string
                   triggers:
                     additionalProperties:
                       type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
+                    description: |-
+                      running any associated provisioners.
+                      A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object

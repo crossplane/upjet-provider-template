@@ -9,10 +9,12 @@ metadata:
 spec:
   forProvider:
     connection:
-    - host: ${element(aws_instance.cluster.*.public_ip, 0)}
+    - host: ${element(aws_instance.cluster[*].public_ip, 0)}
     provisioner:
       remote-exec:
       - inline:
-        - bootstrap-cluster.sh ${join(" ", aws_instance.cluster.*.private_ip)}
+        - |-
+          bootstrap-cluster.sh ${join(" ",
+                aws_instance.cluster[*].private_ip)}
     triggers:
-      cluster_instance_ids: ${join(",", aws_instance.cluster.*.id)}
+      cluster_instance_ids: ${join(",", aws_instance.cluster[*].id)}
