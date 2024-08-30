@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euox pipefail
 
-read -r -p "Lower case provider name (ex. github): " PROVIDER_NAME_LOWER
-read -r -p "Normal case provider name (ex. GitHub): " PROVIDER_NAME_NORMAL
-read -r -p "Organization (ex. upbound, my-org-name): " ORGANIZATION_NAME
-read -r -p "CRD rootGroup (ex. upbound.io, crossplane.io): " CRD_ROOT_GROUP
+: ${PROVIDER_NAME_LOWER:=$(read -r -p "Lower case provider name (ex. github): " PROVIDER_NAME_LOWER; echo -n "${PROVIDER_NAME_LOWER}")}
+: ${PROVIDER_NAME_NORMAL:=$(read -r -p "Normal case provider name (ex. GitHub): " PROVIDER_NAME_NORMAL; echo -n "${PROVIDER_NAME_NORMAL}")}
+: ${ORGANIZATION_NAME:=$(read -r -p "Organization (ex. upbound, my-org-name): " ORGANIZATION_NAME; echo -n "${ORGANIZATION_NAME}")}
+: ${CRD_ROOT_GROUP:=$(read -r -p "CRD rootGroup (ex. upbound.io, crossplane.io): " CRD_ROOT_GROUP; echo -n "${CRD_ROOT_GROUP}")}
 
 REPLACE_FILES='./* ./.github :!build/** :!go.* :!hack/prepare.sh'
 # shellcheck disable=SC2086
