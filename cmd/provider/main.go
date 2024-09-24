@@ -6,6 +6,7 @@ package main
 
 import (
 	"context"
+	"github.com/crossplane/crossplane-runtime/pkg/certificates"
 	"os"
 	"path/filepath"
 	"time"
@@ -54,6 +55,7 @@ func main() {
 		namespace                  = app.Flag("namespace", "Namespace used to set as default scope in default secret store config.").Default("crossplane-system").Envar("POD_NAMESPACE").String()
 		enableExternalSecretStores = app.Flag("enable-external-secret-stores", "Enable support for ExternalSecretStores.").Default("false").Envar("ENABLE_EXTERNAL_SECRET_STORES").Bool()
 		enableManagementPolicies   = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
+		essTLSCertsPath            = app.Flag("ess-tls-cert-dir", "Path of ESS TLS certificates.").Envar("ESS_TLS_CERTS_DIR").String()
 	)
 
 	kingpin.MustParse(app.Parse(os.Args[1:]))
@@ -109,6 +111,15 @@ func main() {
 		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
 		WorkspaceStore: terraform.NewWorkspaceStore(log),
 		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion),
+	}
+
+	o.ESSOptions = &tjcontroller.ESSOptions{}
+	if *essTLSCertsPath != "" {
+		log.Info("ESS TLS certificates path is set. Loading mTLS configuration.")
+		tCfg, err := certificates.LoadMTLSConfig(filepath.Join(*essTLSCertsPath, "ca.crt"), filepath.Join(*essTLSCertsPath, "tls.crt"), filepath.Join(*essTLSCertsPath, "tls.key"), false)
+		kingpin.FatalIfError(err, "Cannot load ESS TLS config.")
+
+		o.ESSOptions.TLSConfig = tCfg
 	}
 
 	if *enableExternalSecretStores {
