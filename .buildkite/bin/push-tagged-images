@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -eu
+
+log_step "Preparing to pushed tagged images..."
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${SCRIPT_DIR}/common
+
+if [[ "$BUILDKITE_TAG" != "" ]]; then
+  echo "Commit has now been tagged, ensuring images have semantic version tag"
+  docker pull $US_WEST_IMAGE_SHA_URL
+
+  # Do this inline as we don't need to do funky stuff with loading image into docker to push it
+  docker tag ${US_WEST_IMAGE_SHA_URL} ${US_WEST_IMAGE_URL}
+  docker push ${US_WEST_IMAGE_URL}
+  docker tag ${US_WEST_IMAGE_SHA_URL} ${US_EAST_IMAGE_URL}
+  docker push ${US_EAST_IMAGE_URL}
+
+  exit 0
+fi
+
+LOCAL_IMAGE=$(docker images | grep "${BUILDKITE_JOB_ID}" | awk '{print $1}' | uniq)
+
+log_step "Publishing release (${IMAGE_NAME}) to US WEST"
+docker_run "TARGET_URL=${US_WEST_IMAGE_URL} .buildkite/bin/tag-and-push-single"
+
+if [[ "${IS_MAIN_BRANCH}" == "true" ]]; then
+  log_step "Publishing release (${IMAGE_NAME})  to US EAST"
+  docker_run "TARGET_URL=${US_EAST_IMAGE_URL} .buildkite/bin/tag-and-push-single"
+fi

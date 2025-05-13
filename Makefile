@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME ?= upjet-provider-template
-PROJECT_REPO ?= github.com/upbound/$(PROJECT_NAME)
+PROJECT_REPO ?= github.com/Gusto/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION ?= 1.5.7
 
@@ -70,10 +70,10 @@ IMAGES = $(PROJECT_NAME)
 # ====================================================================================
 # Setup XPKG
 
-XPKG_REG_ORGS ?= xpkg.upbound.io/upbound
+XPKG_REG_ORGS ?= 226779328744.dkr.ecr.us-west-2.amazonaws.com/platform-orchestration
 # NOTE(hasheddan): skip promoting on xpkg.upbound.io as channel tags are
 # inferred.
-XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
+XPKG_REG_ORGS_NO_PROMOTE ?= 226779328744.dkr.ecr.us-west-2.amazonaws.com/platform-orchestration
 XPKGS = $(PROJECT_NAME)
 -include build/makelib/xpkg.mk
 

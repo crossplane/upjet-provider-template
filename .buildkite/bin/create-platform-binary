@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -eux
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+source ${SCRIPT_DIR}/common
+
+docker_run "GO_BUILDFLAGS=-buildvcs=false REGISTRY_ORGS=${US_WEST_ECR} make build"

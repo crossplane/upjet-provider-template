@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function log_step() {
+  echo "
+
+============================================================
+  $1
+============================================================
+
+"
+}
+
+export -f log_step
+
+function resolve_build_image_tag() {
+  SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+  ROOT_DIR=$( cd -- "$SCRIPT_DIR/../.." &> /dev/null && pwd )
+
+  SHA256=$(sha256sum ${ROOT_DIR}/_gusto/ci/Dockerfile  | awk '{print $1}')
+  echo "${SHA256}"
+}
+export -f resolve_build_image_tag
+
+export US_WEST_ECR="226779328744.dkr.ecr.us-west-2.amazonaws.com"
+export US_EAST_ECR="226779328744.dkr.ecr.us-east-1.amazonaws.com"
+
+export REPO_NAME=
+export BASE_IMAGE_NAME="upjet-provider-template"
+
+IMAGE_NAME_NO_REGISTRY=$BASE_IMAGE_NAME
+
+TAGS_ON_COMMIT=$(git describe --tags)
+SHA_TAG=${BUILDKITE_COMMIT}
+TAG=$( [[ "$TAGS_ON_COMMIT" != "" ]] && echo "${TAGS_ON_COMMIT}" || echo "${SHA_TAG}" )
+IS_MAIN_BRANCH=true
+
+if [[ "${BUILDKITE_BRANCH}" != "main" ]]; then
+  IS_MAIN_BRANCH=false
+  IMAGE_NAME_NO_REGISTRY="${IMAGE_NAME_NO_REGISTRY}-test"
+  SKIP_DOCKER_PUSH=${SKIP_DOCKER_PUSH:-true}
+fi
+
+export IS_MAIN_BRANCH
+
+ARCH=$(arch)
+PLATFORM=$(uname -s | tr '[:upper:]' '[:lower:]')
+
+export TAG
+export BUILD_IMAGE_NAME="${US_WEST_ECR}/${REPO_NAME}${BASE_IMAGE_NAME}-build:${RUN_AS_USER:-}${PLATFORM}-${ARCH}_$(resolve_build_image_tag)"
+export IMAGE_NAME="${US_WEST_ECR}/${REPO_NAME}${IMAGE_NAME_NO_REGISTRY}:${TAG}"
+export IMAGE_NAME_SHA="${US_WEST_ECR}/${REPO_NAME}${IMAGE_NAME_NO_REGISTRY}:${SHA_TAG}"
+
+export BUILD_PLATFORMS=linux_amd64
+
+DOCKER_HOST=${DOCKER_HOST:-unix:///var/run/docker.sock}
+docker_socket=${DOCKER_HOST/unix:\/\//}
+if [[ "${LOCAL_DEV:-}" == "true" ]]; then
+  export IMAGE_NAME=$BASE_IMAGE_NAME-local-dev:local-dev
+fi
+
+function docker_run() {
+  set +u
+  RUN_AS_USER=${RUN_AS_USER:-buildkite-agent}
+  if [[ "${LOCAL_DEV:-}" == "true" ]]; then
+    RUN_AS_USER=root
+  fi
+
+  docker run --rm \
+          $( [[ "$RUN_AS_USER" != "root" ]] && echo "--user $(id -u):$(id -g)" ) \
+          -e IN_CONTAINER=true \
+          -e BUILDKITE \
+          -e BUILDKITE_COMMIT \
+          -e BUILDKITE_JOB_ID \
+          -e BUILDKITE_BRANCH \
+          -e GITHUB_API_TOKEN \
+          -e BUILDKITE_PULL_REQUEST \
+          -e BUILDKITE_PULL_REQUEST_BASE_BRANCH \
+          -e BUILDKITE_TAG \
+          -e GITHUB_ACTION=1 \
+          $( [[ "${AWS_SECRET_ACCESS_KEY:-}" != "" ]] && echo "-e AWS_SECRET_ACCESS_KEY" ) \
+          $( [[ "${AWS_ACCESS_KEY_ID:-}" != "" ]] && echo "-e AWS_ACCESS_KEY_ID" ) \
+          $( [[ "${AWS_SESSION_TOKEN:-}" != "" ]] && echo "-e AWS_SESSION_TOKEN" ) \
+          $( [[ "${BUILDKITE_REPO_MIRROR:-}" != "" ]] && echo "-v $BUILDKITE_REPO_MIRROR:$BUILDKITE_REPO_MIRROR:ro" ) \
+          -v "$HOME/.ssh:/root/.ssh" \
+          -v "$docker_socket:/var/run/docker.sock" \
+          $( [[ $(uname -s) != 'Darwin' ]] && echo "-v $SSH_AUTH_SOCK:/var/run/ssh-agent.sock" ) \
+          $( [[ "${DOCKER_RUN_INTERACTIVE:-false}" == "true" ]] && echo "-it" ) \
+          -e BUILD_REGISTRY=$BUILDKITE_JOB_ID \
+          -e VERSION="${TAG}" \
+          -e PLATFORMS=${BUILD_PLATFORMS} \
+          -v $(pwd):/app \
+          -v $HOME/.docker/config.json:/root/.docker/config.json \
+          --add-host=host.docker.internal:host-gateway \
+          --entrypoint /bin/sh  "$BUILD_IMAGE_NAME" -c "${@}"
+  EXIT_CODE=$?
+  if [[ "${EXIT_CODE}" != "0" ]]; then
+    echo "Docker run failed with exit code ${EXIT_CODE}"
+    exit 1
+  fi
+  set -u
+}
+
+export -f docker_run

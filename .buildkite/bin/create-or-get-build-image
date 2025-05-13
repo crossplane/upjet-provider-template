@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+source ${SCRIPT_DIR}/common
+
+IS_BUILDKITE=${IS_BUILDKITE:-true}
+RUN_AS_USER=${RUN_AS_USER:-buildkite-agent}
+RUN_AS_GROUP=$(id -gn)
+RUN_AS_USER_UID=$(id -u)
+RUN_AS_USER_GID=$(id -g)
+if [[ "${LOCAL_DEV:-}" == "true" ]]; then
+  IS_BUILDKITE=false
+  RUN_AS_USER=root
+fi
+
+log_step "Creating Build Image: $BUILD_IMAGE_NAME"
+
+docker pull $BUILD_IMAGE_NAME || docker build \
+  --build-arg IS_BUILDKITE=${IS_BUILDKITE} \
+  --build-arg RUN_AS_USER=${RUN_AS_USER} \
+  --build-arg RUN_AS_USER_UID=${RUN_AS_USER_UID} \
+  --build-arg RUN_AS_USER_GID=${RUN_AS_USER_GID} \
+  --build-arg RUN_AS_GROUP=${RUN_AS_GROUP} \
+  -f _gusto/ci/Dockerfile -t "$BUILD_IMAGE_NAME" .
+
+if [[ "${IS_LOCAL_DEV:-false}" == "false" ]]; then
+  log_step "Publishing Build Image: $BUILD_IMAGE_NAME"
+  docker push "$BUILD_IMAGE_NAME"
+fi

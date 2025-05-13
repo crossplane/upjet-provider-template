@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -eu
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${SCRIPT_DIR}/common
+
+#############################################################################################################
+# So crossplane does special things... it produces an xpkg file which is essentially
+# a flattened docker image.  We can't push the image that is part of the build/left in docker.
+# calling the `crossplane xpkg release` command doesn't play nicely with ECR credentials
+# So that leaves us with a relatively simple workaround:
+#    docker load, extract the image id, tag, and push
+#############################################################################################################
+DOCKER_IMAGE_LOGS=$(docker load -i _output/xpkg/${BUILD_PLATFORMS}/${BASE_IMAGE_NAME}-${TAG}.xpkg)
+DOCKER_IMAGE=$(echo "$DOCKER_IMAGE_LOGS" | grep "Loaded image ID:" | sed -E 's/.*Loaded image ID: ([^ ]*).*/\1/')
+
+echo "Loaded into local image: ${DOCKER_IMAGE}"
+echo "Will tag it as ${TARGET_URL}"
+
+docker tag ${DOCKER_IMAGE} ${TARGET_URL}
+docker push ${TARGET_URL}

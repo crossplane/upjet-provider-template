@@ -1,0 +1,30 @@
+steps:
+  - label: Build & Push
+    if: build.env("BUILDKITE_TAG") == "" || build.env("BUILDKITE_TAG") == null
+    command:
+      - .buildkite/bin/create-or-get-build-image
+      - .buildkite/bin/create-platform-binary
+      - .buildkite/bin/push-tagged-images
+    plugins:
+      - ssh://git@github.com/Gusto/gusto-github-token-generator-buildkite-plugin.git#v2.1.1: ~
+
+  - wait
+
+  - name: 'Tag Commit'
+    command:
+      - .buildkite/bin/create-or-get-build-image
+      - .buildkite/bin/semantic-release
+    if: build.branch == "${BUILDKITE_PIPELINE_DEFAULT_BRANCH}" && (build.env("BUILDKITE_TAG") == "" || build.env("BUILDKITE_TAG") == null)
+    plugins:
+      - ssh://git@github.com/Gusto/gusto-github-token-generator-buildkite-plugin.git#v2.1.1: ~
+      - ssh://git@github.com/Gusto/github-commit-status-buildkite-plugin.git#v0.0.3: ~
+
+  - name: 'Tag docker images'
+    command:
+      - .buildkite/bin/create-or-get-build-image
+      - .buildkite/bin/push-tagged-images
+    # Webhooks from github for tagging a release weirdly puts sets the branch to that of the tag... even though no branch actually gets created for the release
+    if: build.branch == "${BUILDKITE_TAG}"
+    plugins:
+      - ssh://git@github.com/Gusto/gusto-github-token-generator-buildkite-plugin.git#v2.1.1: ~
+      - ssh://git@github.com/Gusto/github-commit-status-buildkite-plugin.git#v0.0.3: ~
