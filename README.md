@@ -10,7 +10,7 @@ Template API.
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/upbound/upjet-provider-template):
 ```
-up ctp provider install upbound/upjet-provider-template:v0.1.0
+crossplane xpkg install provider xpkg.crossplane.io/upbound/upjet-provider-template:v0.1.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -21,7 +21,7 @@ kind: Provider
 metadata:
   name: upjet-provider-template
 spec:
-  package: upbound/upjet-provider-template:v0.1.0
+  package: xpkg.crossplane.io/upbound/upjet-provider-template:v0.1.0
 EOF
 ```
 
