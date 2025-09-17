@@ -1,0 +1,11 @@
+apiVersion: null.template.m.upbound.io/v1alpha1
+kind: Resource
+metadata:
+  name: example-ns
+spec:
+  forProvider:
+    triggers:
+      example-trigger: example-value-2
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default
