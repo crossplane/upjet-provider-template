@@ -16,11 +16,13 @@ git grep -l "upbound/provider-${PROVIDER_NAME_LOWER}" -- ${REPLACE_FILES} | xarg
 # shellcheck disable=SC2086
 git grep -l 'Template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/Template/${PROVIDER_NAME_NORMAL}/g"
 # shellcheck disable=SC2086
-git grep -l "upbound.io" -- "apis/v1*" | xargs sed -i.bak "s|upbound.io|${CRD_ROOT_GROUP}|g"
+git grep -l "upbound.io" -- "apis/cluster/v1*" | xargs sed -i.bak "s|upbound.io|${CRD_ROOT_GROUP}|g"
+git grep -l "upbound.io" -- "apis/namespaced/v1*" | xargs sed -i.bak "s|upbound.io|${CRD_ROOT_GROUP}|g"
 # shellcheck disable=SC2086
 git grep -l "upbound.io" -- "cluster/test/setup.sh" | xargs sed -i.bak "s|upbound.io|${CRD_ROOT_GROUP}|g"
 # shellcheck disable=SC2086
-git grep -l "ujconfig\.WithRootGroup(\"${PROVIDER_NAME_LOWER}.upbound\.io\")" -- "config/provider.go" | xargs sed -i.bak "s|ujconfig.WithRootGroup(\"${PROVIDER_NAME_LOWER}.upbound.io\")|ujconfig.WithRootGroup(\"${CRD_ROOT_GROUP}\")|g"
+git grep -l "ujconfig\.WithRootGroup(\"${PROVIDER_NAME_LOWER}\.upbound\.io\")" -- "config/provider.go" | xargs sed -i.bak "s|ujconfig.WithRootGroup(\"${PROVIDER_NAME_LOWER}\.upbound\.io\")|ujconfig.WithRootGroup(\"${PROVIDER_NAME_LOWER}.${CRD_ROOT_GROUP}\")|g"
+git grep -l "ujconfig\.WithRootGroup(\"${PROVIDER_NAME_LOWER}\.m\.upbound\.io\")" -- "config/provider.go" | xargs sed -i.bak "s|ujconfig.WithRootGroup(\"${PROVIDER_NAME_LOWER}\.m.upbound\.io\")|ujconfig.WithRootGroup(\"${PROVIDER_NAME_LOWER}.m.${CRD_ROOT_GROUP}\")|g"
 
 # We need to be careful while replacing "template" keyword in go.mod as it could tamper
 # some imported packages under require section.
@@ -37,6 +39,11 @@ git mv "cluster/images/upjet-provider-template" "cluster/images/provider-${PROVI
 # We need to remove this api folder otherwise first `make generate` fails with
 # the following error probably due to some optimizations in go generate with v1.17:
 # generate: open /Users/hasanturken/Workspace/crossplane-contrib/upjet-provider-template/apis/null/v1alpha1/zz_generated.deepcopy.go: no such file or directory
-rm -rf apis/null
+rm -rf apis/cluster/null
+rm -rf apis/namespaced/null
 # remove the sample directory which was a configuration in the template
-rm -rf config/null
+rm -rf config/cluster/null
+rm -rf config/namespaced/null
+# remove the sample MR example from the template
+rm -rf examples/cluster/null
+rm -rf examples/namespaced/null
