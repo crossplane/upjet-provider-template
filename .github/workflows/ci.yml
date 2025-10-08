@@ -10,9 +10,9 @@ on:
 
 env:
   # Common versions
-  GO_VERSION: '1.21'
-  GOLANGCI_VERSION: 'v1.54.0'
-  DOCKER_BUILDX_VERSION: 'v0.8.2'
+  GO_VERSION: '1.24'
+  GOLANGCI_VERSION: 'v2.4.0'
+  DOCKER_BUILDX_VERSION: 'v0.28.0'
 
   # Common users. We can't run a step 'if secrets.XXX != ""' but we can run a
   # step 'if env.XXX != ""', so we copy these to succinctly test whether
@@ -60,6 +60,7 @@ jobs:
         run: |
           make schema-version-diff
 
+
   lint:
     runs-on: ubuntu-24.04
     needs: detect-noop
@@ -100,7 +101,7 @@ jobs:
       # We could run 'make lint' but we prefer this action because it leaves
       # 'annotations' (i.e. it comments on PRs to point out linter violations).
       - name: Lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v8
         with:
           version: ${{ env.GOLANGCI_VERSION }}
 
