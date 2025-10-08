@@ -1,6 +1,6 @@
 # Usage
 
-Replace `readme.md` with a Markdown file of your choice to be used as a detailed README for the [Upbound Marketplace](https://marketplace.upbound.io/).
+Replace `readme.md` with a Markdown file of your choice to be used as a detailed README for this Provider.
 
 By default, the top-level README.md in the GitHub repo may be used.
 
