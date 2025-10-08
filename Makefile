@@ -176,7 +176,7 @@ run: go.build
 # ====================================================================================
 # End to End Testing
 CROSSPLANE_VERSION = 2.0.2
-CROSSPLANE_CLI_VERSION = 2.0.2
+CROSSPLANE_CLI_VERSION = v2.0.2
 CROSSPLANE_NAMESPACE = upbound-system
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
