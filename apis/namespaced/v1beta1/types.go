@@ -1,7 +1,3 @@
-/*
-Copyright 2022 Upbound Inc.
-*/
-
 package v1beta1
 
 import (

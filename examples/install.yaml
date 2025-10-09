@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: upjet-provider-template
 spec:
-  package: xpkg.crossplane.io/upbound/upjet-provider-template:v0.1.0
+  package: xpkg.crossplane.io/crossplane/upjet-provider-template:v0.1.0

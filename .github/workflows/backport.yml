@@ -12,4 +12,4 @@ on:
 
 jobs:
   backport:
-    uses: upbound/official-providers-ci/.github/workflows/provider-backport.yml@standard-runners
+    uses: crossplane-contrib/.github/workflows/backport.yml

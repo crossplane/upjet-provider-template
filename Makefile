@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME ?= upjet-provider-template
-PROJECT_REPO ?= github.com/upbound/$(PROJECT_NAME)
+PROJECT_REPO ?= github.com/crossplane/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION ?= 1.5.7
 
@@ -171,13 +171,13 @@ submodules:
 run: go.build
 	@$(INFO) Running Crossplane locally out-of-cluster . . .
 	@# To see other arguments that can be provided, run the command with --help instead
-	UPBOUND_CONTEXT="local" $(GO_OUT_DIR)/provider --debug
+	$(GO_OUT_DIR)/provider --debug
 
 # ====================================================================================
 # End to End Testing
 CROSSPLANE_VERSION = 2.0.2
 CROSSPLANE_CLI_VERSION = v2.0.2
-CROSSPLANE_NAMESPACE = upbound-system
+CROSSPLANE_NAMESPACE = crossplane-system
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
 
@@ -203,7 +203,7 @@ uptest: $(UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(INFO) running locally built provider
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
-	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
+	@$(KUBECTL) -n crossplane-system wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 
 e2e: local-deploy uptest
@@ -216,7 +216,7 @@ crddiff: $(UPTEST)
 			continue ; \
 		fi ; \
 		echo "Checking $${crd} for breaking API changes..." ; \
-		changes_detected=$$(go run github.com/upbound/uptest/cmd/crddiff@$(CRDDIFF_VERSION) revision --enable-upjet-extensions <(git cat-file -p "$${GITHUB_BASE_REF}:$${crd}") "$${crd}" 2>&1) ; \
+		changes_detected=$$(go run github.com/crossplane/uptest/cmd/crddiff@$(CRDDIFF_VERSION) revision --enable-upjet-extensions <(git cat-file -p "$${GITHUB_BASE_REF}:$${crd}") "$${crd}" 2>&1) ; \
 		if [[ $$? != 0 ]] ; then \
 			printf "\033[31m"; echo "Breaking change detected!"; printf "\033[0m" ; \
 			echo "$${changes_detected}" ; \
