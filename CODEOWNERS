@@ -8,10 +8,9 @@
 # and merge PRs. All PRs must be approved by at least one maintainer before being merged.
 # 
 # Where possible, prefer explicitly specifying a maintainer who is a subject
-# matter expert for a particular part of the codebase rather than using the
-# @upbound/team-extensions group.
+# matter expert for a particular part of the codebase rather than using a group.
 #
 # See also OWNERS.md for governance details
 
 # Fallback owners
-*			@ulucinar @sergenyalcin
+#*			@username

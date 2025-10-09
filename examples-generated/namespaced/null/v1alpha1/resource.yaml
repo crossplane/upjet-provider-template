@@ -6,7 +6,7 @@ metadata:
   labels:
     testing.upbound.io/example-name: cluster
   name: cluster
-  namespace: upbound-system
+  namespace: upbound-system #This will be updated with a new release of Upjet to crossplane-system
 spec:
   forProvider:
     connection:

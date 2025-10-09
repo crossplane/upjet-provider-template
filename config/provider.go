@@ -1,7 +1,3 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
-
 package config
 
 import (
@@ -10,13 +6,13 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
 
-	nullCluster "github.com/upbound/upjet-provider-template/config/cluster/null"
-	nullNamespaced "github.com/upbound/upjet-provider-template/config/namespaced/null"
+	nullCluster "github.com/crossplane/upjet-provider-template/config/cluster/null"
+	nullNamespaced "github.com/crossplane/upjet-provider-template/config/namespaced/null"
 )
 
 const (
 	resourcePrefix = "template"
-	modulePath     = "github.com/upbound/upjet-provider-template"
+	modulePath     = "github.com/crossplane/upjet-provider-template"
 )
 
 //go:embed schema.json

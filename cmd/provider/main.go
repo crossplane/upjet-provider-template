@@ -1,7 +1,3 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
-
 package main
 
 import (
@@ -38,14 +34,14 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	apisCluster "github.com/upbound/upjet-provider-template/apis/cluster"
-	apisNamespaced "github.com/upbound/upjet-provider-template/apis/namespaced"
-	"github.com/upbound/upjet-provider-template/config"
-	"github.com/upbound/upjet-provider-template/internal/clients"
-	controllerCluster "github.com/upbound/upjet-provider-template/internal/controller/cluster"
-	controllerNamespaced "github.com/upbound/upjet-provider-template/internal/controller/namespaced"
-	"github.com/upbound/upjet-provider-template/internal/features"
-	"github.com/upbound/upjet-provider-template/internal/version"
+	apisCluster "github.com/crossplane/upjet-provider-template/apis/cluster"
+	apisNamespaced "github.com/crossplane/upjet-provider-template/apis/namespaced"
+	"github.com/crossplane/upjet-provider-template/config"
+	"github.com/crossplane/upjet-provider-template/internal/clients"
+	controllerCluster "github.com/crossplane/upjet-provider-template/internal/controller/cluster"
+	controllerNamespaced "github.com/crossplane/upjet-provider-template/internal/controller/namespaced"
+	"github.com/crossplane/upjet-provider-template/internal/features"
+	"github.com/crossplane/upjet-provider-template/internal/version"
 )
 
 const (

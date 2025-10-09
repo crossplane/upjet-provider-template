@@ -1,7 +1,3 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
-
 package main
 
 import (
@@ -11,7 +7,7 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/pipeline"
 
-	"github.com/upbound/upjet-provider-template/config"
+	"github.com/crossplane/upjet-provider-template/config"
 )
 
 func main() {

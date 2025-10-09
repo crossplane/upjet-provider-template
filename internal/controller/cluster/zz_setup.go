@@ -9,8 +9,8 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
-	resource "github.com/upbound/upjet-provider-template/internal/controller/cluster/null/resource"
-	providerconfig "github.com/upbound/upjet-provider-template/internal/controller/cluster/providerconfig"
+	resource "github.com/crossplane/upjet-provider-template/internal/controller/cluster/null/resource"
+	providerconfig "github.com/crossplane/upjet-provider-template/internal/controller/cluster/providerconfig"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to

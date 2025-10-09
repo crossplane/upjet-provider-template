@@ -12,7 +12,7 @@ on:
 
 jobs:
   tag:
-    uses: upbound/official-providers-ci/.github/workflows/provider-tag.yml@standard-runners
+    uses: crossplane-contrib/provider-workflows/.github/workflows/tag.yml
     with:
       version: ${{ github.event.inputs.version }}
       message: ${{ github.event.inputs.message }}

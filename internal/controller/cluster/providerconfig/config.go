@@ -1,7 +1,3 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
-
 package providerconfig
 
 import (
@@ -11,7 +7,7 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/controller"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/upbound/upjet-provider-template/apis/cluster/v1beta1"
+	"github.com/crossplane/upjet-provider-template/apis/cluster/v1beta1"
 )
 
 // Setup adds a controller that reconciles ProviderConfigs by accounting for
