@@ -13,7 +13,7 @@ ${KUBECTL} -n upbound-system wait --for=condition=Available deployment --all --t
 
 echo "Creating a default provider config..."
 cat <<EOF | ${KUBECTL} apply -f -
-apiVersion: template.upbound.io/v1beta1
+apiVersion: template.crossplane.io/v1beta1
 kind: ProviderConfig
 metadata:
   name: default
@@ -28,7 +28,7 @@ EOF
 
 echo "Creating a default cluster provider config (v2-style)..."
 cat <<EOF | ${KUBECTL} apply -f -
-apiVersion: template.m.upbound.io/v1beta1
+apiVersion: template.m.crossplane.io/v1beta1
 kind: ClusterProviderConfig
 metadata:
   name: default
