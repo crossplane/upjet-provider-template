@@ -50,7 +50,10 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
-		))
+		),
+		ujconfig.WithExampleManifestConfiguration(ujconfig.ExampleManifestConfiguration{
+			ManagedResourceNamespace: "crossplane-system",
+		}))
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
