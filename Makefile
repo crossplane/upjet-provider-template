@@ -45,7 +45,7 @@ NPROCS ?= 1
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
 GO_REQUIRED_VERSION ?= 1.24
-GOLANGCILINT_VERSION ?= 2.4.0
+GOLANGCILINT_VERSION ?= 2.6.1
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
@@ -55,10 +55,11 @@ GO_SUBDIRS += cmd internal apis
 # Setup Kubernetes tools
 
 KIND_VERSION = v0.30.0
-UP_VERSION = v0.41.0
-UP_CHANNEL = stable
-UPTEST_VERSION = v2.1.0
+UPTEST_VERSION = v2.2.0
 CRDDIFF_VERSION = v0.12.1
+CROSSPLANE_CLI_VERSION = v2.1.1
+# for e2e testing
+CROSSPLANE_VERSION = 2.1.1
 -include build/makelib/k8s_tools.mk
 
 # ====================================================================================
@@ -175,8 +176,6 @@ run: go.build
 
 # ====================================================================================
 # End to End Testing
-CROSSPLANE_VERSION = 2.0.2
-CROSSPLANE_CLI_VERSION = v2.0.2
 CROSSPLANE_NAMESPACE = crossplane-system
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
