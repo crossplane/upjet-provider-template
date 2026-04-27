@@ -4,8 +4,15 @@ on:
   issue_comment:
     types: [created]
 
+permissions:
+  contents: read
+
 jobs:
   e2e:
+    permissions:
+      contents: read
+      statuses: write
+      pull-requests: read
     uses: upbound/official-providers-ci/.github/workflows/pr-comment-trigger.yml@standard-runners
     secrets:
       UPTEST_CLOUD_CREDENTIALS: ${{ secrets.UPTEST_CLOUD_CREDENTIALS }}

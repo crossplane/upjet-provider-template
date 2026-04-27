@@ -2,6 +2,12 @@ name: Comment Commands
 
 on: issue_comment
 
+permissions:
+  contents: read
+
 jobs:
   comment-commands:
+    permissions:
+      contents: write
+      pull-requests: write
     uses: upbound/official-providers-ci/.github/workflows/provider-commands.yml@standard-runners
