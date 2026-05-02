@@ -65,8 +65,7 @@ func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	// register webhooks for the kind v1alpha1.Resource
 	// if they're enabled.
 	if o.StartWebhooks {
-		if err := ctrl.NewWebhookManagedBy(mgr).
-			For(&v1alpha1.Resource{}).
+		if err := ctrl.NewWebhookManagedBy(mgr, &v1alpha1.Resource{}).
 			Complete(); err != nil {
 			return errors.Wrap(err, "cannot register webhook for the kind v1alpha1.Resource")
 		}
