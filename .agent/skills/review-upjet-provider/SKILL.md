@@ -1,6 +1,6 @@
 ---
-name: reviewing-upjet-providers
-description: ⚠️EXPERIMENTAL Use when reviewing, auditing, or assessing a third-party or community Upjet-based Crossplane provider for following official Upbound provider good practices — e.g. checking provider's repo structure, build system, code generation, external-name config, examples coverage, testing, and CI against the official upbound/provider-upjet-{aws,azure,gcp} standard.
+name: review-upjet-provider
+description: ⚠️ EXPERIMENTAL Use when reviewing, auditing, or assessing a third-party or community Upjet-based Crossplane provider for following official Upbound provider good practices — e.g. checking provider's repo structure, build system, code generation, external-name config, examples coverage, testing, and CI against the official upbound/provider-upjet-{aws,azure,gcp} standard.
 ---
 
 # Reviewing Upjet Providers

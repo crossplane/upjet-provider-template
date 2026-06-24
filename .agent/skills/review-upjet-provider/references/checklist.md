@@ -97,7 +97,7 @@ If 0.1 fails → stop; this skill does not apply.
 ## 9. Testing & linting
 | ID | Item | Tier | Gate | How to check |
 |---|---|---|---|---|
-| 9.1 | `make test` runs unit tests; table-driven `*_test.go` exist (esp. config) | M | — | `find . -name '*_test.go' | head` |
+| 9.1 | `make test` runs unit tests; table-driven `*_test.go` exist for shared config helpers | M | — | `find . -name '*_test.go' | head` |
 | 9.2 | `.golangci.yml` enables the standard linter set (read the **list**, not file size) | M | — | read `.golangci.yml` |
 | 9.3 | `.golangci.yml` excludes generated `zz_*`; goimports local-prefix = module | S | — | read file |
 | 9.4 | uptest e2e wired (`cluster/test/setup.sh`, `make uptest`, `UPTEST_EXAMPLE_LIST`) | S | — | read setup.sh + Makefile |

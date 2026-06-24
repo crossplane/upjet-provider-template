@@ -194,8 +194,7 @@ absent (some v1 providers), coverage can't be computed this way — note the deg
 
 ## Category 9 — Testing & linting
 
-**Convention.** Unit tests are table-driven and co-located (`*_test.go`), notably for external-name
-configs and shared `config/**/common`. `.golangci.yml` is golangci-lint **v2** enabling roughly
+**Convention.** Unit tests are table-driven and co-located (`*_test.go`) for shared `config/**/common` helpers. External-name configs are exercised by uptest (E2E), not by fast unit tests — absence of `*_test.go` alongside `config/externalname.go` is expected and not a finding. `.golangci.yml` is golangci-lint **v2** enabling roughly
 `errcheck, govet, gocyclo (min 10), gocritic, goconst, revive (confidence 0.8), staticcheck, unconvert,
 unused, misspell, nakedret`, excludes generated `zz_*`, sets `goimports` local-prefix = module path,
 and a long timeout (~90m). E2E is uptest-driven via `cluster/test/setup.sh` (seeds ProviderConfig(s),
