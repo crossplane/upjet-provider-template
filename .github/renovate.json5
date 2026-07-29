@@ -14,18 +14,6 @@
   "labels": ["automated"],
   "customManagers": [
     {
-      // We want a PR to bump Go versions used through env variables in any Github
-      // Actions, taking it from the official Github repository.
-      "customType": "regex",
-      "description": "Bump Go version in workflows",
-      "fileMatch": ["^\\.github\\/workflows\\/[^/]+\\.ya?ml$"],
-      "matchStrings": [
-        "GO_VERSION: '(?<currentValue>.*?)'\\n"
-      ],
-      "datasourceTemplate": "golang-version",
-      "depNameTemplate": "golang"
-    },
-    {
       // We want a PR to bump golangci-lint versions used through env variables in
       // any Github Actions, taking it from the official Github repository tags.
       "customType": "regex",
