@@ -1,6 +1,6 @@
 module github.com/crossplane/upjet-provider-template
 
-go 1.26.7
+go 1.26.10
 
 tool golang.org/x/tools/cmd/goimports
 
